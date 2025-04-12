@@ -7,7 +7,6 @@ body {
     height: 200vh;
 }
 
-/*Nav Styles*/
 .nav {
     display: flex;
     justify-content: space-between;

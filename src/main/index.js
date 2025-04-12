@@ -8,7 +8,7 @@ function createWindow() {
     width: 800,
     height: 600,
     show: false,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -39,7 +39,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcMain.on('ping', () => console.log('pong'))
+  // ipcMain.on(inp, () => console.log(inp))
 
   createWindow()
 
