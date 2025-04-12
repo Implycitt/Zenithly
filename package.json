@@ -6,14 +6,14 @@
   "author": "Quentin Bordelon",
   "contributors": [
     {
-    "name": "William Bradford"
+      "name": "William Bradford"
     },
     {
-    "name": "Nihal Mohapatro"
+      "name": "Nihal Mohapatro"
     },
     {
-    "name": "Quentin Bordelon",
-    "email": "qgbordelon@gmail.com"
+      "name": "Quentin Bordelon",
+      "email": "qgbordelon@gmail.com"
     }
   ],
   "homepage": "https://electron-vite.org",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^2.0.0",
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
-    "electron": "^35.0.3",
+    "electron": "^35.1.5",
     "electron-builder": "^25.1.8",
     "electron-vite": "^3.1.0",
     "eslint": "^9.23.0",

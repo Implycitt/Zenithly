@@ -1,33 +1,23 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Electron</title>
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
-    />
-
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1"/>
+    <title>Zenithly</title>
     <link href="./assets/main.css" type="text/css" rel="stylesheet" />
   </head>
 
   <body>
-    <div id="app">
-      <div class="creator">Powered by electron-vite</div>
-      <div class="text">
-        Build an Electron app with
-        <span class="js">JavaScript</span>
-      </div>
-      <p class="tip">Please try pressing <code>F12</code> to open the devTool</p>
-      <div class="actions">
-        <div class="action">
-          <a id="ipcHandler" target="_blank" rel="noreferrer">Send IPC</a>
-        </div>
-      </div>
-
+    <div class="nav">
+      <h1>Zenithly</h1>
+      <nav>
+        <a>nav1</a>
+        <a>nav2</a>
+        <a>nav3</a>
+      </nav>
     </div>
-
-    <script type="module" src="./src/renderer.js"></script>
+    <div class="b">
+      <div class="calendar"></div>
+      <div class="reminders"></div>
+    </div>
   </body>
 </html>
