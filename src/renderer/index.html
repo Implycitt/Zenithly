@@ -17,18 +17,18 @@
     </div>
 
     <div class="content">
-      <div class="calendarBody">
+      <div id="calendarBody" class="calendarBody">
         <h2>Calendar</h2>
 
         <!-- Calendar Navigation -->
         <div class="calendar-header">
           <button id="prev-month">&#8592;</button>
-          <span id="month-year"></span>
+          <span id="month-year" style="display: inline-block; width: 140px; text-align: center;"></span>
           <button id="next-month">&#8594;</button>
         </div>
 
         <!-- Calendar Table -->
-        <table class="tempCalendar">
+        <table id="calendar" class="calendar">
           <thead>
             <tr>
               <th>Su</th>
@@ -55,6 +55,6 @@
     </div>
 
     <script type="module" src="./src/renderer.js"></script>
-    <script type="module" src="./src/scripts/calender.js"></script>
+    <script type="module" src="./src/scripts/calendar.js"></script>
   </body>
 </html>

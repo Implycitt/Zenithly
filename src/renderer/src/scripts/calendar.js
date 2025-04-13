@@ -56,6 +56,30 @@ function renderCalendar(month, year) {
     }
   }
 
+  function calendarHeight() {
+    const rows = calendarBody.getElementsByTagName("tr");
+    const calendarHeight = 590;
+    const rowHeight = calendarHeight / rows.length;
+
+    for (let row of rows) {
+      row.style.height = `${rowHeight}px`;
+    }
+  }
+  
+  
+  
+
+function checkContent() {
+  const cells = calendarBody.getElementsByTagName("td");
+
+  for (let cell of cells) {
+    if (cell.innerHTML === "") {
+      cell.style.borderWidth = "0px";
+      cell.style.backgroundColor = "transparent";
+    }
+  }
+}
+
 // Button
 prevBtn.addEventListener("click", () => {
     currentMonth--;
@@ -64,6 +88,8 @@ prevBtn.addEventListener("click", () => {
       currentYear--;
     }
     renderCalendar(currentMonth, currentYear);
+    calendarHeight();
+    checkContent();
   });
   
 nextBtn.addEventListener("click", () => {
@@ -73,6 +99,10 @@ nextBtn.addEventListener("click", () => {
       currentYear++;
     }
     renderCalendar(currentMonth, currentYear);
+    calendarHeight();
+    checkContent();
   });
 
 renderCalendar(currentMonth, currentYear);
+calendarHeight();
+checkContent();
