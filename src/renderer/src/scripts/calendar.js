@@ -43,11 +43,15 @@ function renderCalendar(month, year) {
           
           const dayView = document.getElementById('day-view');
           const dayTitle = document.getElementById('dayTitle');
+          const close = document.createElement('img');
+          close.classList.add("close");
+          close.src = '../assets/close.png'
 
           //Opens day-view if date is clicked on
           cell.addEventListener('click', () => {
             dayTitle.textContent = `${p.textContent} ${monthName} ${year}`;
-            dayView.classList.remove('hidden');
+            dayView.append(close);
+            dayView.style.display = "block";
           })
   
           if (
@@ -115,6 +119,13 @@ nextBtn.addEventListener("click", () => {
     calendarHeight();
     checkContent();
   });
+
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('close')) {
+        event.target.parentElement.style.display = "none";  
+    }
+});
+
 
 renderCalendar(currentMonth, currentYear);
 calendarHeight();

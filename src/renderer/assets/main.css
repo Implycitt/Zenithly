@@ -177,6 +177,7 @@ body {
 /* Reminders page */
 .day-view {
   background-color: var(--pastelGreen);
+  display: none;
   position: relative;
   flex-basis: 600px;
   margin-left: 10px;
@@ -186,9 +187,16 @@ body {
   border-bottom-right-radius: 12px;
 }
 
-#day-view.hidden {
-  display: none;
+.close {
+  top: 0;
+  right: 0;
+  height: 25px;
+  width: 25px;
+  align-self: normal;
+  position: absolute;
+  margin: 30px;
 }
+
 
 /* Reminders button */
 .add-reminder {
