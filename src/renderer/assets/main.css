@@ -157,7 +157,7 @@ body {
 }
 
 .calendar tbody td {
-  width: 170px;
+  width: 240px;
   height: auto;
   text-align: center;
   padding: 0;
@@ -165,8 +165,17 @@ body {
   border-radius: 12px;
 }
 
+.calendar tbody td p:active {
+  transform: scale(0.9);
+  transition: transform 0.3s;
+}
+
+.calendar tbody td p {
+  transition: transform 0.1s;
+}
+
 /* Reminders page */
-.reminders {
+.day-view {
   background-color: var(--pastelGreen);
   position: relative;
   flex-basis: 600px;
@@ -175,6 +184,10 @@ body {
   min-height: 600px;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
+}
+
+#day-view.hidden {
+  display: none;
 }
 
 /* Reminders button */

@@ -4,6 +4,8 @@ const prevBtn = document.getElementById("prev-month");
 const nextBtn = document.getElementById("next-month");
 
 let currentDate = new Date();
+
+let currentDay = currentDate.getDay();
 let currentMonth = currentDate.getMonth();
 let currentYear = currentDate.getFullYear();
 
@@ -30,12 +32,23 @@ function renderCalendar(month, year) {
         const cell = document.createElement("td");
         const p = cell.appendChild(document.createElement("p"));
 
+        cell.classList.add("calendar-day");
+
         cell.classList.add("nunito-regular");
   
         if (i === 0 && j < firstDay) {
           p.textContent = "";
         } else if (dayCounter <= daysInMonth) {
           p.textContent = dayCounter;
+          
+          const dayView = document.getElementById('day-view');
+          const dayTitle = document.getElementById('dayTitle');
+
+          //Opens day-view if date is clicked on
+          cell.addEventListener('click', () => {
+            dayTitle.textContent = `${p.textContent} ${monthName} ${year}`;
+            dayView.classList.remove('hidden');
+          })
   
           if (
             dayCounter === todayDate &&
@@ -68,9 +81,6 @@ function renderCalendar(month, year) {
       row.style.height = `${rowHeight}px`;
     }
   }
-  
-  
-  
 
 function checkContent() {
   const cells = calendarBody.getElementsByTagName("td");
