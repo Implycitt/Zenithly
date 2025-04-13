@@ -51,6 +51,7 @@ body {
 
 .nav h1 {
   margin: auto 20px;
+  font-weight: 500;
 }
 
 /* Content Styles */
@@ -76,9 +77,12 @@ body {
 }
 
 /* Calendar header */
-#calendar-header {
+.calendar-header {
   display: flex;
+  align-items: center;
+  gap: 10px;   
 }
+
 
 #prev-month, #next-month {
   background-color: var(--lightGreen);
@@ -91,7 +95,13 @@ body {
   cursor: pointer;
   box-shadow: 0 0 10px var(--mediumGreen);
   transition: background-color 0.5s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.5s, transform 0.5s;
 }
+
 
 #prev-month:only-child, #next-month:only-child {
   margin: 0 auto;
@@ -99,10 +109,13 @@ body {
 
 #prev-month:hover, #next-month:hover {
   background-color: var(--hoverGreen);
+  transform: scale(1.2);
+  transition: background-color 0.5s, transform 0.5s;
 }
 
 #month-year {
-  display: flex;
+  width: 140px;
+  text-align: center;
 }
 
 /* Calendar styles */
@@ -115,13 +128,28 @@ body {
 }
 
 
-.today {
+.today p {
   font-size: xx-large;
+  display: block;
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+  margin: auto;
+  box-shadow: 0 0 10px var(--mediumGreen);
+
+  border-radius: 50%; /* or 50% */
+
+  background-color: var(--hoverGreen);
+  color: white;
+  text-align: center;
+  font-size: 2em;
 }
+
 
 .calendar thead th {
   width: 170px;
   height: 80px;
+  font-weight: 700;
   text-align: center;
   padding: 0.5rem;
   background-color: var(--offwhiteGreen);
@@ -165,9 +193,11 @@ body {
   font-size: 24px;
   cursor: pointer;
   box-shadow: 0 0 10px var(--mediumGreen);
+  transition: background-color 0.5s, transform 0.5s;
 }
 
 .add-reminder:hover {
   background-color: var(--hoverGreen);
-  transition: background-color 0.5s;
+  transform: scale(1.2);
+  transition: background-color 0.5s, transform 0.5s;
 }

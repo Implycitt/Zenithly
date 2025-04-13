@@ -28,11 +28,14 @@ function renderCalendar(month, year) {
   
       for (let j = 0; j < 7; j++) {
         const cell = document.createElement("td");
+        const p = cell.appendChild(document.createElement("p"));
+
+        cell.classList.add("nunito-regular");
   
         if (i === 0 && j < firstDay) {
-          cell.textContent = "";
+          p.textContent = "";
         } else if (dayCounter <= daysInMonth) {
-          cell.textContent = dayCounter;
+          p.textContent = dayCounter;
   
           if (
             dayCounter === todayDate &&
@@ -44,7 +47,7 @@ function renderCalendar(month, year) {
   
           dayCounter++;
         } else {
-          cell.textContent = "";
+          p.textContent = "";
         }
   
         row.appendChild(cell);

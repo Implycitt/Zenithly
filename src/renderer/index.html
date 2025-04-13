@@ -4,26 +4,30 @@
     <meta charset="UTF-8" name="viewport" content="initial-scale=1"/>
     <title>Zenithly</title>
     <link href="./assets/main.css" type="text/css" rel="stylesheet" />
+    <link href="./assets/fonts.css" type="text/css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <div class="nav">
-      <h1>Zenithly</h1>
+    <div class="nav ">
+      <h1 class="raleway-regular">Zenithly</h1>
       <nav>
-        <a>nav1</a>
-        <a>nav2</a>
-        <a>nav3</a>
+        <a class="nunito-regular">nav1</a>
+        <a class="nunito-regular">nav2</a>
+        <a class="nunito-regular">nav3</a>
       </nav>
     </div>
 
     <div class="content">
       <div id="calendarBody" class="calendarBody">
-        <h2>Calendar</h2>
+        <h2 class="raleway-regular">Calendar</h2>
 
         <!-- Calendar Navigation -->
-        <div class="calendar-header">
+        <div class="calendar-header nunito-regular">
           <button id="prev-month">&#8592;</button>
-          <span id="month-year" style="display: inline-block; width: 140px; text-align: center;"></span>
+          <span id="month-year" class="nunito-regular" style="display: inline-block; width: 140px; text-align: center;"></span>
           <button id="next-month">&#8594;</button>
         </div>
 
@@ -31,13 +35,13 @@
         <table id="calendar" class="calendar">
           <thead>
             <tr>
-              <th>Su</th>
-              <th>Mo</th>
-              <th>Tu</th>
-              <th>We</th>
-              <th>Th</th>
-              <th>Fr</th>
-              <th>Sa</th>
+              <th class="raleway-regular">Sun</th>
+              <th class="raleway-regular">Mon</th>
+              <th class="raleway-regular">Tue</th>
+              <th class="raleway-regular">Wed</th>
+              <th class="raleway-regular">Thu</th>
+              <th class="raleway-regular">Fri</th>
+              <th class="raleway-regular">Sat</th>
             </tr>
           </thead>
           <tbody id="calendar-body">
@@ -47,9 +51,11 @@
       </div>
 
       <div class="reminders">
-        <h2>Day View</h2>
-        <p>7am: drink water</p>
-        <p>9am: play rivals</p>
+        <h2 class="raleway-regular">Day View</h2>
+        <div>
+          <p class="nunito-regular">7am: drink water</p>
+          <p class="nunito-regular">9am: play rivals</p>
+        </div>
         <div class="add-reminder">+</div>
       </div>
     </div>
