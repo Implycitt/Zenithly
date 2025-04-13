@@ -1,8 +1,8 @@
-import { hello } from './hello.js';
+import { example } from './example.js';
 
 function init() {
   window.addEventListener('DOMContentLoaded', () => {
-    hello();
+    example()
   })
 }
 
