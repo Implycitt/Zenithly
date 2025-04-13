@@ -33,8 +33,7 @@ function renderCalendar(month, year) {
         const p = cell.appendChild(document.createElement("p"));
 
         cell.classList.add("calendar-day");
-
-        cell.classList.add("nunito-regular");
+        p.classList.add("nunito-regular");
   
         if (i === 0 && j < firstDay) {
           p.textContent = "";

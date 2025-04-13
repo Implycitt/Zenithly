@@ -152,17 +152,23 @@ body {
   font-weight: 700;
   text-align: center;
   padding: 0.5rem;
-  background-color: var(--offwhiteGreen);
+  background-color: var(--white);
   border-radius: 12px;
 }
 
 .calendar tbody td {
-  width: 240px;
+  width: 22vw;
   height: auto;
   text-align: center;
   padding: 0;
-  background-color: var(--offwhiteGreen);
+  background-color: var(--white);
   border-radius: 12px;
+}
+
+.calendar tbody td:hover {
+  background-color: var(--offwhiteGreen);
+  transform: scale(1.05);
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .calendar tbody td p:active {
