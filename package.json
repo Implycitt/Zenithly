@@ -4,6 +4,7 @@
   "description": "A minimal Electron application with JavaScript",
   "main": "./out/main/index.js",
   "author": "Quentin Bordelon",
+  "type": "module",
   "contributors": [
     {
       "name": "William Bradford"
