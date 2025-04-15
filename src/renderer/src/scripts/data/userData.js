@@ -5,7 +5,7 @@ import { createJSON, getJSON, overwrite, parseObject } from '../../tools/json.js
 const PATH = '../../../../../data/userData.json';
 
 function init() {
-  let defaultUserData = createJSON(new Object(userData));
+  let defaultUserData = createUserData();
 
   fs.appendFile(PATH, defaultUserData, (err) => {
     handleError(err);
@@ -13,13 +13,16 @@ function init() {
 
 }
 
-function createUserData(gend = 'none', water = 0) {
+function createUserData(gend = 'none', water = ((2.7+3.7)/2), state = 0) {
   let userData = new Object;
 
   userData.gender = gend;
   userData.waterIntake = water;
+  userData.state = state;
+  // 0 -> Default State
+  // 1 -> Sleep state
 
-  return userData
+  return createJSON(userData);
 }
 
 function setGender(gend) {
@@ -34,7 +37,6 @@ function setGender(gend) {
   overwrite(writeable, PATH);
 }
 
-
 function setIntake(water) {
   if (!fs.existsSync(PATH)) {
     init();
@@ -47,9 +49,21 @@ function setIntake(water) {
   overwrite(writeable, PATH);
 }
 
+function setState(state) {
+  if (!fs.existsSync(PATH)) {
+    init();
+  }
+
+  let readData = getJSON(PATH);
+  let newData = createUserData(readData.gender, readData.water, state)
+  let writeable = Object.assign(newData, readData);
+
+  overwrite(writeable, PATH);
+}
+
+
 function getter(key) {
   return parseObject(getJSON(PATH))[key]
 }
 
-
-export { setGender, getter, setIntake, createUserData, init };
+export { setGender, setState, setIntake, getter, createUserData, init };

@@ -1,43 +1,19 @@
 {
-  "yearId": 2025,
-  "months": [
+  "id": "2025-3-15",
+  "reminders": [
     {
-      "monthId": 3,
-      "days": [
-        {
-          "dayId": 14,
-          "reminders": [
-            {
-              "reminderId": 0,
-              "completed": false,
-              "startHours": 22,
-              "startMinutes": 10,
-              "startSeconds": 26
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}{
-  "yearId": 2025,
-  "months": [
+      "reminderId": 0,
+      "completed": false,
+      "startHours": 17,
+      "startMinutes": 2,
+      "startSeconds": 5
+    },
     {
-      "monthId": 3,
-      "days": [
-        {
-          "dayId": 14,
-          "reminders": [
-            {
-              "reminderId": 0,
-              "completed": false,
-              "startHours": 22,
-              "startMinutes": 10,
-              "startSeconds": 26
-            }
-          ]
-        }
-      ]
+      "reminderId": 0,
+      "completed": false,
+      "startHours": 17,
+      "startMinutes": 2,
+      "startSeconds": 5
     }
   ]
 }
