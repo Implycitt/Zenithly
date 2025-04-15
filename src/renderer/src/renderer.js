@@ -1,4 +1,3 @@
-
 function init() {
   window.addEventListener('DOMContentLoaded', () => {
   })

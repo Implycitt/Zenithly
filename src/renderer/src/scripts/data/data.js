@@ -1,7 +1,9 @@
 import fs from 'fs';
 import { handleError } from '../../tools/error.js';
+import { createJSON, getJSON, writeAppend, parseObject } from '../../tools/json.js';
 
-const path = '../../../../../data/reminderData.json';
+//TODO: make sure that all the functions take in path since everything is relative
+const PATH = '../../../../../data/reminderData.json';
 const date = new Date(Date.now());
 
 function createReminder(reminderId = 0, completed = false) {
@@ -43,44 +45,27 @@ function createYear(yearId = date.getFullYear(), months = []) {
   return year
 }
 
-function createJSON(object) {
-  return JSON.stringify(object, null, 2);
-}
-
-function parseObject(json) {
-  return JSON.parse(json);
-}
-
-function writeToData(object, path) {
-  if (!fs.existsSync(path)) {
-    fs.openSync(path, 'w');
+function writeToData(object, PATH) {
+  if (!fs.existsSync(PATH)) {
+    fs.openSync(PATH, 'w');
   }
 
   let day = date.getDate();
   let month = date.getMonth();
   let year = date.getFullYear();
-  let readData = getjson(path);
+  let readData = parseObject(getJSON(PATH));
   let combined;
 
   if (readData == undefined) {
     combined = object;
   } else {
-    // make it so that it goes under the same objects
-    combined = { ...readData[year][month][day], ...object};
+    // TODO: make it so that it goes under the same objects
+    combined = Object.assign(object, readData);
   }
-  combined = parseObject(createJSON(combined));
 
-  fs.appendFile(path, createJSON(combined), { encoding: 'utf8', flag: 'a+' }, (err) => {
-    handleError(err);
-  });
+  writeAppend(combined, PATH);
 }
 
-function getjson(path) {
-  fs.readFile(path, 'utf8', (err, data) => {
-    handleError(err);
-    return data
-  });
-}
 
 function init(numReminders = 1) {
   let day = createDay();
@@ -97,9 +82,4 @@ function init(numReminders = 1) {
   return year
 }
 
-function test() {
-  let obj = init();
-  writeToData(obj, path);
-}
-
-test()
+export { writeToData, init, createYear, createMonth, createReminder, createDay }
