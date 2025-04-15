@@ -11,8 +11,8 @@
   </head>
 
   <body>
-    <div class="nav ">
-      <h1 class="raleway-regular">Zenithly</h1>
+    <div class="nav" id="nav">
+      <h1 class="raleway-regular" id="navTitle">Zenithly</h1>
       <nav>
         <a class="nunito-regular">nav1</a>
         <a class="nunito-regular">nav2</a>
@@ -22,10 +22,9 @@
 
     <div class="content">
       <div id="calendarBody" class="calendarBody">
-        <h2 class="raleway-regular">Calendar</h2>
-
         <!-- Calendar Navigation -->
         <div class="calendar-header nunito-regular">
+          <h2 class="raleway-regular">Calendar</h2>
           <button id="prev-month">&#8592;</button>
           <span id="month-year" class="nunito-regular" style="display: inline-block; width: 140px; text-align: center;"></span>
           <button id="next-month">&#8594;</button>
@@ -58,5 +57,6 @@
 
     <script type="module" src="./src/renderer.js"></script>
     <script type="module" src="./src/scripts/calendar.js"></script>
+    <script type="module" src="./src/scripts/nav.js"></script>
   </body>
 </html>

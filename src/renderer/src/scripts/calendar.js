@@ -77,11 +77,11 @@ function renderCalendar(month, year) {
 
   function calendarHeight() {
     const rows = calendarBody.getElementsByTagName("tr");
-    const calendarHeight = 590;
+    const calendarHeight = 100;
     const rowHeight = calendarHeight / rows.length;
 
     for (let row of rows) {
-      row.style.height = `${rowHeight}px`;
+      row.style.height = `${rowHeight}%`;
     }
   }
 
