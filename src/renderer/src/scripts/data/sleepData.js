@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { getJSON, setter, overwrite, getJsonAsObject, setterAppend } from '../../tools/json.js';
 import { createID } from './data.js';
+import { getAverageSleep } from '../sleep.js';
 
 const path = '../../../../../data/sleepData.json';
 const hoursMath = 1000*60*60
@@ -24,23 +25,34 @@ function createSleepData(state = 0, sleeps = '') {
   return sleepData;
 }
 
-function createSleep(start, endTime = null, timeSlept = 0) {
+function createSleep(start, endTime = null, timeSlept = 0, goodness = 0) {
   let sleep = new Object;
 
   sleep.ID = createID();
   sleep.startTime = start;
   sleep.endTime = endTime;
   sleep.timeSlept = timeSlept;
+  sleep.goodnessOfSleep = goodness;
 
   return sleep
 }
 
 function updateSleeps(path, endTime) {
-  let readData = getJsonAsObject(path)
+  let readData = getJsonAsObject(path);
   let lastStartTime = readData.sleeps.slice(-1)[0].startTime;
-  let object = createSleep(lastStartTime, endTime, getDeltaTime(path, endTime));
-  let writeable = createSleepData(readData.state+1%1, object);
-  setter(path, writeable, readData);
+  let delta = getDeltaTime(path, endTime);
+  let object = createSleep(lastStartTime, endTime, delta, updateGoodness(path, delta));
+  readData.sleeps.pop();
+  let conc = readData.sleeps.concat(object);
+  let writeable = createSleepData(0, conc);
+  overwrite(writeable, path);
+}
+
+function updateGoodness(path, delta) {
+  let readData = getJsonAsObject(path);
+  let average = getAverageSleep(path);
+  if (average == 0) average = 1
+  return (delta/average)
 }
 
 function addSleeps(path, sleeps) {
@@ -49,14 +61,15 @@ function addSleeps(path, sleeps) {
   }
   let readData = getJsonAsObject(path);
   let conc = readData.sleeps.concat(sleeps);
-  let writeable = createSleepData(readData.state, conc);
+  let writeable = createSleepData(1, conc);
   setter(path, writeable, readData);
 }
 
 function setState(path, state) {
-  let newData = createSleepData(state)
+  let readData = getJsonAsObject(path);
+  let newData = createSleepData(state);
   if (!fs.existsSync(path)) init();
-  setter(path, newData);
+  setter(path, newData, readData);
 }
 
 function getDeltaTime(path, time) {
@@ -76,10 +89,12 @@ function test() {
   let date = new Date(Date.now());
   // let sleeps = createSleep(date.getTime());
   // addSleeps(path, sleeps);
-  // console.log(getDeltaTime(path, date.getTime()));
-  // updateSleeps(path, date.getTime())
+  // let delta = getDeltaTime(path, date.getTime());
+  updateSleeps(path, date.getTime())
   // getSleeps(path);
-
+  // console.log(updateGoodness(path, delta))
 }
 
 test();
+
+export { getSleeps, getDeltaTime, setState, addSleeps, updateSleeps, createSleep, createSleepData }
