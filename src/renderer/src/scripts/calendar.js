@@ -34,6 +34,7 @@ function renderCalendar(month, year) {
 
         cell.classList.add("calendar-day");
         p.classList.add("nunito-regular");
+        p.style.margin = "0px";
   
         if (i === 0 && j < firstDay) {
           p.textContent = "";
