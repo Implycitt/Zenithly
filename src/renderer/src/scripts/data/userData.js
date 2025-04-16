@@ -1,69 +1,48 @@
 import fs from 'fs';
 import { handleError } from '../../tools/error.js';
-import { createJSON, getJSON, overwrite, parseObject } from '../../tools/json.js';
+import { getJSON, getJsonAsObject, parseObject, setter } from '../../tools/json.js';
 
-const PATH = '../../../../../data/userData.json';
+const path = '../../../../../data/userData.json';
 
-function init() {
+function init(path) {
   let defaultUserData = createUserData();
 
-  fs.appendFile(PATH, defaultUserData, (err) => {
+  fs.appendFile(path, defaultUserData, (err) => {
     handleError(err);
   });
-
 }
 
-function createUserData(gend = 'none', water = ((2.7+3.7)/2), state = 0) {
+function createUserData(gend = 'none', water = ((2.7+3.7)/2)) {
   let userData = new Object;
 
   userData.gender = gend;
   userData.waterIntake = water;
-  userData.state = state;
-  // 0 -> Default State
-  // 1 -> Sleep state
 
-  return createJSON(userData);
+  return userData;
 }
 
-function setGender(gend) {
-  if (!fs.existsSync(PATH)) {
-    init();
-  }
-
+function setGender(gend, path) {
+  if (!fs.existsSync(path)) init();
+  let readData = getJsonAsObject(path);
   let newData = createUserData(gend)
-  let readData = getJSON(PATH);
-  let writeable = Object.assign(newData, readData);
-
-  overwrite(writeable, PATH);
+  setter(path, newData, readData);
 }
 
-function setIntake(water) {
-  if (!fs.existsSync(PATH)) {
-    init();
-  }
-
-  let readData = getJSON(PATH);
-  let newData = createUserData(readData.gender, water)
-  let writeable = Object.assign(newData, readData);
-
-  overwrite(writeable, PATH);
+function setIntake(water, path) {
+  if (!fs.existsSync(path)) init();
+  let readData = getJsonAsObject(path);
+  let newData = createUserData(readData.gender, water);
+  setter(path, newData, readData);
 }
 
-function setState(state) {
-  if (!fs.existsSync(PATH)) {
-    init();
-  }
-
-  let readData = getJSON(PATH);
-  let newData = createUserData(readData.gender, readData.water, state)
-  let writeable = Object.assign(newData, readData);
-
-  overwrite(writeable, PATH);
+function getter(key, path) {
+  return parseObject(getJSON(path))[key]
 }
 
-
-function getter(key) {
-  return parseObject(getJSON(PATH))[key]
+function test() {
+  setGender('male', path)
 }
 
-export { setGender, setState, setIntake, getter, createUserData, init };
+test()
+
+export { setGender, setIntake, getter, createUserData, init };

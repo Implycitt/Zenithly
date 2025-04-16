@@ -13,6 +13,13 @@ function getJSON(path) {
   return fs.readFileSync(path, { encoding: 'utf8' })
 }
 
+function getJsonAsObject(path) {
+  if (getJSON(path) == undefined || getJSON(path) == "") {
+    return '';
+  }
+  return parseObject(fs.readFileSync(path, { encoding: 'utf8' }))
+}
+
 function writeAppend(writeable, path) {
   fs.appendFile(path, createJSON(writeable), { encoding: 'utf8', flag: 'a+' }, (err) => {
     handleError(err);
@@ -25,5 +32,14 @@ function overwrite(writeable, path) {
   });
 }
 
-export { createJSON, parseObject, getJSON, overwrite, writeAppend }
+function setter(path, newData, readData) {
+  let r = readData;
+  let data = newData;
+  let writeable = Object.assign(r, newData);
+
+  overwrite(writeable, path);
+}
+
+
+export { createJSON, parseObject, getJSON, getJsonAsObject, overwrite, writeAppend, setter }
 

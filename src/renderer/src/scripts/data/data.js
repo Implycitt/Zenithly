@@ -1,17 +1,17 @@
 import fs from 'fs';
-import { handleError } from '../../tools/error.js';
-import { createJSON, getJSON, writeAppend, parseObject } from '../../tools/json.js';
+import { getJsonAsObject, writeAppend } from '../../tools/json.js';
 
 const date = new Date(Date.now());
+const path = '../../../../../data/reminderData.json';
 
-function createReminder(reminderId = 0, completed = false) {
+function createReminder(reminderId = 0, completed = false, startHour, startMinute, startSecond) {
   let remind = new Object;
 
   remind.reminderId = reminderId;
   remind.completed = completed;
-  remind.startHours = date.getHours();
-  remind.startMinutes = date.getMinutes();
-  remind.startSeconds = date.getSeconds();
+  remind.startHour = startHour;
+  remind.startMinute = startMinute;
+  remind.startSecond = startSecond;
 
   return remind
 }
@@ -20,27 +20,21 @@ function createID() {
   return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
 }
 
-function createObj(numReminders = 1) {
+function createRemindersDay(reminders) {
   let reminderObj = new Object;
-  reminderObj.id = createID();
-  reminderObj.reminders = [];
 
-  for (let i = 0; i < numReminders; ++i) {
-    reminderObj.reminders.push(createReminder());
-  }
+  reminderObj.id = createID();
+  reminderObj.reminders = reminders;
 
   return reminderObj
 }
 
-function writeToData(object, path) {
+function addData(object, path) {
   if (!fs.existsSync(path)) {
     fs.openSync(path, 'w');
   }
 
-  let day = date.getDate();
-  let month = date.getMonth();
-  let year = date.getFullYear();
-  let readData = getJSON(path);
+  let readData = getJsonAsObject(path);
   let combined;
 
   if (readData == undefined || readData == "") {
@@ -52,4 +46,10 @@ function writeToData(object, path) {
   writeAppend(combined, path);
 }
 
-export { writeToData, createReminder, createID, createObj }
+function test() {
+  let remind = createReminder(date.getHours(), date.getMinutes(), date.getSeconds());
+  let obj = createRemindersDay([remind])
+  addData(obj, path)
+}
+
+export { addData, createReminder, createID, createRemindersDay }
