@@ -11,10 +11,6 @@ function getAverageSleep(sleepDataPath) {
   return (average/(sleeps.length))
 }
 
-function normalizeSleep() {
-
-}
-
 function test() {
   console.log(getAverageSleep(relativeSleepData));
 }

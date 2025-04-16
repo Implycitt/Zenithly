@@ -52,4 +52,6 @@ function test() {
   addData(obj, path)
 }
 
+test()
+
 export { addData, createReminder, createID, createRemindersDay }

@@ -7,4 +7,13 @@
       "startHour": 1
     }
   ]
+}{
+  "id": "2025-3-15",
+  "reminders": [
+    {
+      "reminderId": 22,
+      "completed": 13,
+      "startHour": 1
+    }
+  ]
 }
