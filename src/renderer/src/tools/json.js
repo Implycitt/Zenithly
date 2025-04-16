@@ -40,6 +40,14 @@ function setter(path, newData, readData) {
   overwrite(writeable, path);
 }
 
+function setterAppend(path, newData, readData) {
+  let r = readData;
+  let data = newData;
+  let writeable = Object.assign(r, newData);
+  console.log(writeable)
 
-export { createJSON, parseObject, getJSON, getJsonAsObject, overwrite, writeAppend, setter }
+  writeAppend(writeable, path);
+}
+
+export { createJSON, parseObject, getJSON, getJsonAsObject, overwrite, writeAppend, setter, setterAppend }
 

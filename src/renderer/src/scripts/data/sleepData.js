@@ -1,24 +1,25 @@
 import fs from 'fs';
-import { getJSON, setter, parseObject, overwrite, getJsonAsObject } from '../../tools/json.js';
+import { getJSON, setter, overwrite, getJsonAsObject, setterAppend } from '../../tools/json.js';
 import { createID } from './data.js';
 
 const path = '../../../../../data/sleepData.json';
 const hoursMath = 1000*60*60
 
 function init(path) {
-  let defaultSleepData = createSleepData();
+  let defaultSleepData = createSleepData(0, []);
 
   overwrite(defaultSleepData, path);
 }
 
-function createSleepData(state = 0, sleeps = []) {
+function createSleepData(state = 0, sleeps = '') {
   let sleepData = new Object;
 
   sleepData.state = state;
   // 0 -> Default State
   // 1 -> Sleep state
 
-  sleepData.sleeps = [sleeps];
+  sleepData.sleeps = sleeps;
+
 
   return sleepData;
 }
@@ -43,13 +44,13 @@ function updateSleeps(path, endTime) {
 }
 
 function addSleeps(path, sleeps) {
-  if (getJSON(path) == undefined || getJSON(path) == "") {
+  if (getJsonAsObject(path) == undefined || getJsonAsObject(path) == "") {
     init(path);
   }
   let readData = getJsonAsObject(path);
-  let object = createSleepData(1, sleeps);
-
-  setter(path, object, readData);
+  let conc = readData.sleeps.concat(sleeps);
+  let writeable = createSleepData(readData.state, conc);
+  setter(path, writeable, readData);
 }
 
 function setState(path, state) {
@@ -67,12 +68,17 @@ function getDeltaTime(path, time) {
   return ((time - readSleeps)/hoursMath);
 }
 
+function getSleeps(path) {
+  return getJsonAsObject(path).sleeps
+}
+
 function test() {
   let date = new Date(Date.now());
   // let sleeps = createSleep(date.getTime());
   // addSleeps(path, sleeps);
   // console.log(getDeltaTime(path, date.getTime()));
-  updateSleeps(path, date.getTime())
+  // updateSleeps(path, date.getTime())
+  // getSleeps(path);
 
 }
 
