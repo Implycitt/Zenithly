@@ -42,6 +42,9 @@ function renderCalendar(month, year) {
 
         if (i === 0 && j < firstDay) {
           p.textContent = "";
+          cell.style.background = "transparent";
+          cell.style.boxShadow = "none";
+          cell.style.scale = "1";
         } else if (dayCounter <= daysInMonth) {
           p.textContent = dayCounter;
 
@@ -57,25 +60,27 @@ function renderCalendar(month, year) {
             dayView.append(close);
             dayView.style.display = "block";
           })
+
           const iconContainer = document.createElement("div");
           iconContainer.classList.add("icon-container");
-        
+
           const water = document.createElement("img");
           water.src = waterIcon;
           water.alt = "Water";
           water.style.width = "20px";
           water.style.height = "20px";
-        
+
           const sleep = document.createElement("img");
           sleep.src = sleepIcon;
           sleep.alt = "Sleep";
           sleep.style.width = "20px";
           sleep.style.height = "20px";
-        
+
           iconContainer.appendChild(water);
           iconContainer.appendChild(sleep);
+
           cell.appendChild(iconContainer);
-          
+
 
           if (
             dayCounter === todayDate &&
@@ -88,7 +93,10 @@ function renderCalendar(month, year) {
           dayCounter++;
         } else {
           p.textContent = "";
-          cell.classList.add("empty");
+          cell.removeAttribute('style');
+          cell.style.boxShadow = "none";
+          cell.style.background = "transparent";
+          cell.style.scale = "1";
         }
 
         row.appendChild(cell);
@@ -102,7 +110,7 @@ function renderCalendar(month, year) {
 
   function calendarHeight() {
     const rows = calendarBody.getElementsByTagName("tr");
-    const calendarHeight = 100;
+    const calendarHeight = 80;
     const rowHeight = calendarHeight / rows.length;
 
     for (let row of rows) {
@@ -121,6 +129,30 @@ function checkContent() {
   }
 }
 
+function hideDayContent() {
+  document.querySelectorAll('.icon-container').forEach(iconContainer => {
+    iconContainer.style.display = 'none';
+  });
+
+  document.querySelectorAll('.calendar tbody td').forEach(cell => {
+    cell.addEventListener('mouseenter', () => {
+      const iconContainer = cell.querySelector('.icon-container');
+      if (iconContainer) {
+        iconContainer.style.display = 'flex';
+        iconContainer.style.alignItems = "center";
+        iconContainer.style.justifyContent = "center";
+      }
+    });
+
+    cell.addEventListener('mouseleave', () => {
+      const iconContainer = cell.querySelector('.icon-container');
+      if (iconContainer) {
+        iconContainer.style.display = 'none';
+      }
+    });
+  });
+}
+
 // Button
 prevBtn.addEventListener("click", () => {
     currentMonth--;
@@ -131,6 +163,7 @@ prevBtn.addEventListener("click", () => {
     renderCalendar(currentMonth, currentYear);
     calendarHeight();
     checkContent();
+    hideDayContent();
   });
 
 nextBtn.addEventListener("click", () => {
@@ -142,6 +175,7 @@ nextBtn.addEventListener("click", () => {
     renderCalendar(currentMonth, currentYear);
     calendarHeight();
     checkContent();
+    hideDayContent();
   });
 
   document.addEventListener('click', function(event) {
@@ -154,3 +188,4 @@ nextBtn.addEventListener("click", () => {
 renderCalendar(currentMonth, currentYear);
 calendarHeight();
 checkContent();
+hideDayContent();

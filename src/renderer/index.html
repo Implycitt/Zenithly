@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" name="viewport" content="initial-scale=1"/>
     <title>Zenithly</title>
+    <script type="module" src="./src/renderer.js"></script>
+    <script type="module" src="./src/scripts/calendar.js"></script>
+    <script type="module" src="./src/scripts/3d.js"></script>
     <link href="./assets/css/main.css" type="text/css" rel="stylesheet" />
     <link href="./assets/css/fonts.css" type="text/css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,16 +17,15 @@
   <body>
     <div class="nav" id="nav">
       <img src='./assets/images/zenithly.ico' alt='logo'/>
-      <h1 class="raleway-regular" id="navTitle"></h1>
+      <h1 class="raleway-regular" id="navTitle">Zenithly</h1>
     </div>
 
     <div class="content">
       <div id="calendarBody" class="calendarBody">
         <!-- Calendar Navigation -->
         <div class="calendar-header nunito-regular">
-          <h2 class="raleway-regular"></h2>
           <button id="prev-month">&#8592;</button>
-          <span id="month-year" class="nunito-regular" style="display: inline-block; width: 140px; text-align: center;"></span>
+          <span id="month-year" class="nunito-regular"></span>
           <button id="next-month">&#8594;</button>
         </div>
 

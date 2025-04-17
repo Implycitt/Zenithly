@@ -14,13 +14,13 @@ function nav_close() {
 
 function smallWindow(x) {
   if (x.matches) {
-    document.getElementById("navTitle").textContent = "Z";
+    document.getElementById("navTitle").textContent = "";
   }
 }
 
 function bigWindow(x) {
-    document.getElementById("navTitle").textContent = "Zenithly";
   if (x.matches) {
+    document.getElementById("navTitle").textContent = "Zenithly";
   }
 }
 
@@ -31,3 +31,6 @@ sW.addEventListener("change", function() {
 bW.addEventListener("change", function() {
   bigWindow(bW);
 });
+
+bigWindow(bW);
+smallWindow(sW);
