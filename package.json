@@ -34,6 +34,7 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
     "date-fns": "^4.1.0",
+    "fs": "^0.0.1-security",
     "node-cron": "^3.0.3"
   },
   "devDependencies": {

@@ -48,6 +48,7 @@
 
       <div class="day-view hidden slide" id="day-view">
         <h2 class="hidden raleway-regular" id="dayTitle"></h2>
+        <div id="average-sleep"></div>
         <div class="add-reminder">+</div>
       </div>
     </div>
@@ -55,5 +56,16 @@
     <script type="module" src="./src/renderer.js"></script>
     <script type="module" src="./src/scripts/calendar.js"></script>
     <script type="module" src="./src/scripts/3d.js"></script>
+    <script type="module" src="./src/scripts/sleep.js"></script>
+    <script>
+    import { getAverageSleep } from './src/scripts/sleep.js';
+
+      function displayAverageSleep() {
+        const average = getAverageSleep('../../data/sleepData.json');
+        document.getElementById('average-sleep').textContent = `Average Sleep: ${average} hours`;
+      }
+      
+      displayAverageSleep();
+      </script>
   </body>
 </html>
