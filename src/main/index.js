@@ -9,7 +9,7 @@ function createWindow() {
     width: 800,
     height: 600,
     show: false,
-    autoHideMenuBar: false,
+    autoHideMenuBar: true,
     icon: zenithly,
     ...(process.platform === 'linux' ? { zenithly } : {}),
     webPreferences: {
