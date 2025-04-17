@@ -57,14 +57,25 @@ function renderCalendar(month, year) {
             dayView.append(close);
             dayView.style.display = "block";
           })
-
-          const water = document.createElement("water");
-          water.src = waterIcon; // change to your image
-          water.alt = "Icon";
+          const iconContainer = document.createElement("div");
+          iconContainer.classList.add("icon-container");
+        
+          const water = document.createElement("img");
+          water.src = waterIcon;
+          water.alt = "Water";
           water.style.width = "20px";
           water.style.height = "20px";
-          water.style.marginTop = "4px";
-          cell.appendChild(water);
+        
+          const sleep = document.createElement("img");
+          sleep.src = sleepIcon;
+          sleep.alt = "Sleep";
+          sleep.style.width = "20px";
+          sleep.style.height = "20px";
+        
+          iconContainer.appendChild(water);
+          iconContainer.appendChild(sleep);
+          cell.appendChild(iconContainer);
+          
 
           if (
             dayCounter === todayDate &&
@@ -77,6 +88,7 @@ function renderCalendar(month, year) {
           dayCounter++;
         } else {
           p.textContent = "";
+          cell.classList.add("empty");
         }
 
         row.appendChild(cell);
