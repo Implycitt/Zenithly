@@ -1,5 +1,6 @@
 import closeButton from '../../assets/images/close.png';
-import waterIcon from 'resources/water.png'
+import waterIcon from '../../assets/images/water.png';
+import sleepIcon from '../../assets/images/sleep.png';
 
 const calendarBody = document.getElementById("calendar-body");
 const monthYearLabel = document.getElementById("month-year");
