@@ -110,7 +110,7 @@ function renderCalendar(month, year) {
 
   function calendarHeight() {
     const rows = calendarBody.getElementsByTagName("tr");
-    const calendarHeight = 80;
+    const calendarHeight = 70;
     const rowHeight = calendarHeight / rows.length;
 
     for (let row of rows) {
@@ -178,10 +178,10 @@ nextBtn.addEventListener("click", () => {
     hideDayContent();
   });
 
-  document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('close')) {
-        event.target.parentElement.style.display = "none";
-    }
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('close')) {
+      event.target.parentElement.style.display = "none";
+  }
 });
 
 
