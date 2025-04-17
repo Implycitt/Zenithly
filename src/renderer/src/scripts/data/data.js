@@ -4,11 +4,10 @@ import { getJsonAsObject, writeAppend } from '../../tools/json.js';
 const date = new Date(Date.now());
 const path = '../../../../../data/reminderData.json';
 
-function createReminder(reminderId = 0, completed = false, startHour, startMinute, startSecond) {
+function createReminder(startHour, startMinute, startSecond) {
   let remind = new Object;
 
-  remind.reminderId = reminderId;
-  remind.completed = completed;
+  remind.completed = false;
   remind.startHour = startHour;
   remind.startMinute = startMinute;
   remind.startSecond = startSecond;
@@ -46,10 +45,21 @@ function addData(object, path) {
   writeAppend(combined, path);
 }
 
+function updateReminder(path) {
+
+}
+
+function addReminder(path, id, reminds = 1) {
+  let readData = getJsonAsObject(path);
+  let conc = readData[id]
+  console.log(conc);
+}
+
 function test() {
   let remind = createReminder(date.getHours(), date.getMinutes(), date.getSeconds());
   let obj = createRemindersDay([remind])
-  addData(obj, path)
+  // addData(obj, path)
+  addReminder(path, )
 }
 
 test()

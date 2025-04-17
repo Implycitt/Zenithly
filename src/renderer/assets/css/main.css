@@ -80,17 +80,13 @@ body {
 /* Calendar header */
 .calendar-header {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
+  width: 500px;
 }
-
-.calendar-header h2 {
-  margin: 5px auto 0px 10px;
-}
-
 
 #prev-month, #next-month {
+  display: block;
   background-color: var(--lightGreen);
   color: black;
   width: 30px;
@@ -106,14 +102,6 @@ body {
   transition: background-color 0.5s, transform 0.5s;
 }
 
-#next-month {
-  margin-right: 15px;
-}
-
-#prev-month:only-child, #next-month:only-child {
-  margin: 0 auto;
-}
-
 #prev-month:hover, #next-month:hover {
   background-color: var(--hoverGreen);
   transform: scale(1.2);
@@ -123,6 +111,7 @@ body {
 #month-year {
   width: 140px;
   text-align: center;
+  display: block;
 }
 
 /* Calendar styles */
@@ -166,41 +155,25 @@ body {
 }
 
 .calendar tbody td {
-  z-index: 0;
   position: relative;
+  overflow: visible;
+  z-index: 0;
   width: 22vw;
-  height: auto;
-  text-align: center;
-  padding: 0;
   background-color: var(--white);
   border-radius: 12px;
-  transform-style: preserve-3d;
-  transition: background-color 0.2s, transform 0.2s, scale 0.5s, box-shadow 0.5s, margin 20s;
+  transition: background-color 0.2s, transform 0.2s, scale 0.5s, box-shadow 0.5s;
 }
 
 .calendar tbody td:hover {
-  position: relative;
   background-color: var(--offwhiteGreen);
   transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
   box-shadow: 0px 0px 0px 2px var(--mediumGreen);
   scale: 1.5;
-  z-index: 99999;
-  & p {
-    position: absolute;
-    top: 10%;
-    left: 0;
-    transform: translate(15px, 0px);
-    transition: top 0.3s, left 0.3s, transform 0.3s;
-  }
+  z-index: 10;
 }
 
 .calendar tbody td p:active {
   transform: scale(0.9);
-  transition: transform 0.3s, scale 0.3s, top 0.3s, left 0.3s;
-}
-
-.calendar tbody td p {
-  transition: transform 0.3s, scale 0.3s, top 0.3s, left 0.3s;
 }
 
 .today:hover p {
@@ -316,20 +289,16 @@ body {
 
   /*Calendar styles*/
   .calendarBody {
-    height: 95vh;
+    height: 90vh;
   }
 
   .calendar {
     margin-top: 0px;
-    height: 92%;
+    height: 90%;
   }
 
   .calendar-header h2{
     margin: 5px auto 5px 20px;
-  }
-
-  #next-month {
-    margin-right: 15px;
   }
 }
 
