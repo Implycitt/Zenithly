@@ -1,4 +1,5 @@
 import closeButton from '../../assets/images/close.png';
+import waterIcon from 'resources/water.png'
 
 const calendarBody = document.getElementById("calendar-body");
 const monthYearLabel = document.getElementById("month-year");
@@ -55,6 +56,14 @@ function renderCalendar(month, year) {
             dayView.append(close);
             dayView.style.display = "block";
           })
+
+          const water = document.createElement("water");
+          water.src = waterIcon; // change to your image
+          water.alt = "Icon";
+          water.style.width = "20px";
+          water.style.height = "20px";
+          water.style.marginTop = "4px";
+          cell.appendChild(water);
 
           if (
             dayCounter === todayDate &&
