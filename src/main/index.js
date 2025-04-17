@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import zenithly from '../../resources/zenithly.png?asset'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -9,7 +10,8 @@ function createWindow() {
     height: 600,
     show: false,
     autoHideMenuBar: false,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon: zenithly,
+    ...(process.platform === 'linux' ? { zenithly } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,

@@ -81,7 +81,7 @@ body {
 .calendar-header {
   display: flex;
   align-items: center;
-  gap: 10px;   
+  gap: 10px;
   margin-top: 10px;
 }
 
@@ -203,7 +203,7 @@ body {
   transition: transform 0.3s, scale 0.3s, top 0.3s, left 0.3s;
 }
 
-.today:hover p { 
+.today:hover p {
     color: var(--hoverGreen);
     border: none;
     box-shadow: none;

@@ -4,30 +4,30 @@ var sW = window.matchMedia("screen and (max-height: 929px)")
 var bW = window.matchMedia("screen and (min-height: 929px)")
 
 function nav_open() {
-    document.getElementById("mySidebar").style.width = "100%";
-    document.getElementById("mySidebar").style.display = "block";
-  }
-  
+  document.getElementById("mySidebar").style.width = "100%";
+  document.getElementById("mySidebar").style.display = "block";
+}
+
 function nav_close() {
-    document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("mySidebar").style.display = "none";
 }
 
 function smallWindow(x) {
-    if (x.matches) {
-        document.getElementById("navTitle").textContent = "Z";
-    }
+  if (x.matches) {
+    document.getElementById("navTitle").textContent = "Z";
+  }
 }
 
 function bigWindow(x) {
-    if (x.matches) {
-        document.getElementById("navTitle").textContent = "Zenithly";
-    }
+    document.getElementById("navTitle").textContent = "Zenithly";
+  if (x.matches) {
+  }
 }
 
 sW.addEventListener("change", function() {
-    smallWindow(sW);
+  smallWindow(sW);
 });
 
 bW.addEventListener("change", function() {
-    bigWindow(bW);
+  bigWindow(bW);
 });

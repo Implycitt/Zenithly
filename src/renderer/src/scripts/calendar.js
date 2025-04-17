@@ -1,3 +1,5 @@
+import closeButton from '../../assets/images/close.png';
+
 const calendarBody = document.getElementById("calendar-body");
 const monthYearLabel = document.getElementById("month-year");
 const prevBtn = document.getElementById("prev-month");
@@ -11,23 +13,23 @@ let currentYear = currentDate.getFullYear();
 
 function renderCalendar(month, year) {
     calendarBody.innerHTML = "";
-  
+
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
-  
+
     monthYearLabel.textContent = `${monthName} ${year}`;
-  
+
     const today = new Date();
     const todayDate = today.getDate();
     const todayMonth = today.getMonth();
     const todayYear = today.getFullYear();
-  
+
     let dayCounter = 1;
-  
+
     for (let i = 0; i < 6; i++) {
       const row = document.createElement("tr");
-  
+
       for (let j = 0; j < 7; j++) {
         const cell = document.createElement("td");
         const p = cell.appendChild(document.createElement("p"));
@@ -35,17 +37,17 @@ function renderCalendar(month, year) {
         cell.classList.add("calendar-day");
         p.classList.add("nunito-regular");
         p.style.margin = "0px";
-  
+
         if (i === 0 && j < firstDay) {
           p.textContent = "";
         } else if (dayCounter <= daysInMonth) {
           p.textContent = dayCounter;
-          
+
           const dayView = document.getElementById('day-view');
           const dayTitle = document.getElementById('dayTitle');
           const close = document.createElement('img');
           close.classList.add("close");
-          close.src = '../assets/close.png'
+          close.src = closeButton;
 
           //Opens day-view if date is clicked on
           cell.addEventListener('click', () => {
@@ -53,7 +55,7 @@ function renderCalendar(month, year) {
             dayView.append(close);
             dayView.style.display = "block";
           })
-  
+
           if (
             dayCounter === todayDate &&
             month === todayMonth &&
@@ -61,17 +63,17 @@ function renderCalendar(month, year) {
           ) {
             cell.classList.add("today");
           }
-  
+
           dayCounter++;
         } else {
           p.textContent = "";
         }
-  
+
         row.appendChild(cell);
       }
-  
+
       calendarBody.appendChild(row);
-  
+
       if (dayCounter > daysInMonth) break;
     }
   }
@@ -108,7 +110,7 @@ prevBtn.addEventListener("click", () => {
     calendarHeight();
     checkContent();
   });
-  
+
 nextBtn.addEventListener("click", () => {
     currentMonth++;
     if (currentMonth > 11) {
@@ -122,7 +124,7 @@ nextBtn.addEventListener("click", () => {
 
   document.addEventListener('click', function(event) {
     if (event.target.classList.contains('close')) {
-        event.target.parentElement.style.display = "none";  
+        event.target.parentElement.style.display = "none";
     }
 });
 
