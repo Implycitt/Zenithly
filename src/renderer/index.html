@@ -5,16 +5,23 @@
     <title>Zenithly</title>
     <link href="./assets/css/main.css" type="text/css" rel="stylesheet" />
     <link href="./assets/css/fonts.css" type="text/css" rel="stylesheet" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script type="module" src="./src/scripts/nav.js"></script>
   </head>
 
   <body>
     <div class="nav" id="nav">
       <img src='./assets/images/zenithly.ico' alt='logo'/>
       <h1 class="raleway-regular" id="navTitle">Zenithly</h1>
+    </div>
+
+    <div class="reminderPopup">
+      <h2 class="raleway-regular">Add a Reminder</h2>
+      <input type="time" class="nunito-regular" id="reminderInput">
+      <button class="nunito-regular" id="saveReminder">Save</button>
+      <img class="reminderClose" src="/assets/images/close.png">
     </div>
 
     <div class="content">
@@ -40,12 +47,11 @@
             </tr>
           </thead>
           <tbody id="calendar-body">
-            <!-- JavaScript will inject calendar days here -->
           </tbody>
         </table>
       </div>
 
-      <div class="day-view hidden slide" id="day-view">
+      <div class="day-view slide" id="day-view">
         <h2 class="hidden raleway-regular" id="dayTitle"></h2>
         <div id="average-sleep"></div>
         <div class="add-reminder">+</div>

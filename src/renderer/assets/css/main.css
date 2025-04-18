@@ -82,7 +82,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px;
 }
 
 #prev-month, #next-month {
@@ -120,7 +122,7 @@ body {
   background-color: var(--pastelGreen);
   margin: 10px auto 20px auto;
   border-spacing: 10px;
-  height: 94%;
+  height: 90%;
 }
 
 
@@ -162,6 +164,7 @@ body {
   background-color: var(--white);
   border-radius: 12px;
   transition: background-color 0.2s, transform 0.2s, scale 0.5s, box-shadow 0.5s;
+  text-align: center;
 }
 
 .calendar tbody td:hover {
@@ -239,6 +242,111 @@ body {
   transition: background-color 0.5s, transform 0.5s;
 }
 
+/*Reminders Popup*/
+.reminderPopup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 99999999999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--pastelGreen);
+  box-shadow: 0px 0px 10px black;
+  border-radius: 10px;
+  width: 400px;
+  height: 170px;
+  padding: 1%;
+  text-align: center;
+}
+
+.reminderPopup h2 {
+  font-weight: 600;
+  margin-top: -7px;
+}
+
+#reminderInput {
+  width: 60%;
+  border: none;
+  height: 34px;
+  padding: 0px 10px;
+  border-radius: 5px;
+}
+
+#reminderInput::-webkit-datetime-edit-text {
+  padding: 19px 4px;
+}
+
+/* Hour */
+#reminderInput::-webkit-datetime-edit-hour-field {
+  background-color: #f2f4f5;
+  border-radius: 15%;
+  padding: 19px 13px;
+}
+
+#reminderInput::-webkit-datetime-edit-hour-field:focus {
+  color: var(--deepGreen);
+}
+
+/* Minute */
+#reminderInput::-webkit-datetime-edit-minute-field {
+  background-color: #f2f4f5;
+  border-radius: 15%;
+  padding: 19px 13px;
+}
+
+#reminderInput::-webkit-datetime-edit-minute-field:focus {
+  color: var(--deepGreen);
+}
+
+/* AM/PM */
+#reminderInput::-webkit-datetime-edit-ampm-field {
+  background-color: var(--deepGreen);
+  border-radius: 15%;
+  color: #fff;
+  padding: 19px 13px;
+}
+
+#saveReminder {
+  margin: 0 auto;
+  margin-top: 5%;
+  width: 20%;
+  height: 17%;
+  font-weight: 500;
+}
+
+#saveReminder {
+  display: block;
+  background-color: var(--lightGreen);
+  color: black;
+  border-radius: 5px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--mediumGreen);
+  transition: background-color 0.5s;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.5s, transform 0.5s;
+}
+
+#saveReminder:hover {
+  background-color: var(--hoverGreen);
+  transform: scale(1.1);
+  transition: background-color 0.5s, transform 0.5s;
+}
+
+.reminderClose {
+  position: absolute;
+  height: 20px;
+  top: 10px;
+  right: 10px;
+  z-index: 999999999999;
+}
+
+/*Media Queries*/
 @media screen and (max-height: 929px) {
   body {
     display: flex;
@@ -270,6 +378,7 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     z-index: 100;
     gap: 10px;
+    min-width: 50px;
   }
 
   .nav nav {
@@ -292,13 +401,15 @@ body {
     height: 90vh;
   }
 
+  .calendar
+
   .calendar {
     margin-top: 0px;
     height: 90%;
   }
 
-  .calendar-header h2{
-    margin: 5px auto 5px 20px;
+  .calendar-header {
+    margin: 15px;
   }
 }
 
