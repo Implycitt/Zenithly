@@ -1,16 +1,17 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { getJsonAsObject, writeAppend } from '../../tools/json.js';
 
 const date = new Date(Date.now());
 const path = '../../../../../data/reminderData.json';
 
-function createReminder(startHour, startMinute, startSecond) {
+function createReminder(startHour, startMinute, startSecond, quantity) {
   let remind = new Object;
 
   remind.completed = false;
   remind.startHour = startHour;
   remind.startMinute = startMinute;
   remind.startSecond = startSecond;
+  remind.waterQuantity = quantity;
 
   return remind
 }
@@ -59,7 +60,7 @@ function test() {
   let remind = createReminder(date.getHours(), date.getMinutes(), date.getSeconds());
   let obj = createRemindersDay([remind])
   // addData(obj, path)
-  addReminder(path, )
+  addReminder(path, '2025-3-16')
 }
 
 test()

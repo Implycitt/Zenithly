@@ -1,5 +1,5 @@
 import { handleError } from './error.js';
-import fs from 'fs';
+import fs from 'node:fs';
 
 function createJSON(object) {
   return JSON.stringify(object, null, 2);

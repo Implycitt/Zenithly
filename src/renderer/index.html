@@ -3,9 +3,6 @@
   <head>
     <meta charset="UTF-8" name="viewport" content="initial-scale=1"/>
     <title>Zenithly</title>
-    <script type="module" src="./src/renderer.js"></script>
-    <script type="module" src="./src/scripts/calendar.js"></script>
-    <script type="module" src="./src/scripts/3d.js"></script>
     <link href="./assets/css/main.css" type="text/css" rel="stylesheet" />
     <link href="./assets/css/fonts.css" type="text/css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,16 +55,6 @@
     <script type="module" src="./src/renderer.js"></script>
     <script type="module" src="./src/scripts/calendar.js"></script>
     <script type="module" src="./src/scripts/3d.js"></script>
-    <script type="module" src="./src/scripts/sleep.js"></script>
-    <script>
-    import { getAverageSleep } from './src/scripts/sleep.js';
-
-      function displayAverageSleep() {
-        const average = getAverageSleep('../../data/sleepData.json');
-        document.getElementById('average-sleep').textContent = `Average Sleep: ${average} hours`;
-      }
-      
-      displayAverageSleep();
-      </script>
+    <!-- <script type="module" src="./src/scripts/sleep.js"></script> -->
   </body>
 </html>

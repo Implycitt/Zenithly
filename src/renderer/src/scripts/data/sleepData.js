@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import { getJSON, setter, overwrite, getJsonAsObject, setterAppend } from '../../tools/json.js';
 import { createID } from './data.js';
 import { getAverageSleep } from '../sleep.js';

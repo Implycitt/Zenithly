@@ -1,3 +1,6 @@
+import { ipcRenderer } from 'electron';
+// import { getAverageSleep } from './scripts/sleep.js';
+
 function init() {
   window.addEventListener('DOMContentLoaded', () => {
   })
@@ -11,7 +14,7 @@ function changeContent(routePath) {
 }
 
 function test() {
-  changeContent(routeData);
+  // changeContent(routeData);
+  const average = getAverageSleep('../../data/sleepData.json');
+  console.log(average);
 }
-
-test()

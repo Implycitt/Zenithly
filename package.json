@@ -4,7 +4,6 @@
   "description": "A minimal Electron application with JavaScript",
   "main": "./out/main/index.js",
   "author": "Quentin Bordelon",
-  "type": "module",
   "contributors": [
     {
       "name": "William Bradford"
@@ -33,9 +32,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
-    "date-fns": "^4.1.0",
-    "fs": "^0.0.1-security",
-    "node-cron": "^3.0.3"
+    "electron-updater": "^6.3.9"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^2.0.0",
