@@ -17,6 +17,8 @@ document.addEventListener('click', function(event) {
 
 saveButton.addEventListener('click', function(event) {
     event.target.parentElement.style.display = "none";
-    console.log(input.value.slice(0, 2), input.value.slice(3));
-    createReminder(input.value.slice(0, 2), input.value.slice(3), 0);
+    if (input.value != "") {
+        console.log(input.value.slice(0, 2), input.value.slice(3));
+        //createReminder(input.value.slice(0, 2), input.value.slice(3), 0);
+    }
 });

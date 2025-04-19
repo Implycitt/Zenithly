@@ -6,6 +6,7 @@ const calendarBody = document.getElementById("calendar-body");
 const monthYearLabel = document.getElementById("month-year");
 const prevBtn = document.getElementById("prev-month");
 const nextBtn = document.getElementById("next-month");
+const calendarHeader = document.getElementById("calendar-header");
 
 let currentDate = new Date();
 
@@ -59,6 +60,7 @@ function renderCalendar(month, year) {
             dayTitle.textContent = `${p.textContent} ${monthName} ${year}`;
             dayView.append(close);
             dayView.style.display = "block";
+            calendarHeader.style.justifyContent = "flex-start";
           })
 
           const iconContainer = document.createElement("div");
@@ -181,6 +183,7 @@ nextBtn.addEventListener("click", () => {
 document.addEventListener('click', function(event) {
   if (event.target.classList.contains('close')) {
       event.target.parentElement.style.display = "none";
+      calendarHeader.style.justifyContent = "center";
   }
 });
 

@@ -201,9 +201,9 @@ body {
   flex-basis: 600px;
   margin-left: 10px;
   padding: 10px 20px;
-  min-height: 500px;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
+  min-height: 505px;
 }
 
 .close {
@@ -346,6 +346,28 @@ body {
   z-index: 999999999999;
 }
 
+/* Day View Reminders */
+#reminders {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.reminder {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  width: 100%;
+  height: 50px;
+  border-radius: 7px;
+  padding: 5%;
+}
+
+.reminder h3 {
+  font-size: 1.2em;
+}
+
 /*Media Queries*/
 @media screen and (max-height: 929px) {
   body {
@@ -379,6 +401,7 @@ body {
     z-index: 100;
     gap: 10px;
     min-width: 50px;
+    max-width: 75px;
   }
 
   .nav nav {
@@ -398,10 +421,8 @@ body {
 
   /*Calendar styles*/
   .calendarBody {
-    height: 90vh;
+    height: 95vh;
   }
-
-  .calendar
 
   .calendar {
     margin-top: 0px;
@@ -411,9 +432,23 @@ body {
   .calendar-header {
     margin: 15px;
   }
+
+  /* Day-view Styles*/
+  .day-view {
+    height: 95vh;
+  }
 }
 
 @media screen and (max-height: 800px) {
+  .today p {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    font-size: large;
+  }
+}
+
+@media screen and (max-width: 1000px) {
   .today p {
     height: 30px;
     width: 30px;
