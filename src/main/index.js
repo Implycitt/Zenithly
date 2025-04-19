@@ -1,20 +1,20 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron';
+import { app, shell, BrowserWindow, ipcMain, ipcRenderer } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import fs from 'fs';
 import zenithly from '../../resources/zenithly.png?asset';
 
-import { Handling } from './scripts/tools/handler.js';
-import { getJsonAsObject, writeAppend } from './scripts/tools/file.js';
-import { addData } from './scripts/data/data.js';
-import { SleepData } from './scripts/data/sleepData.js';
+import { Json, addData } from './scripts/tools/file.js';
+import { handleError } from './scripts/tools/handler.js';
+
+const sqlite3 = require('sqlite3').verbose();
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     show: false,
-    autoHideMenuBar: false,
+    autoHideMenuBar: true,
     icon: zenithly,
     ...(process.platform === 'linux' ? { zenithly } : {}),
     webPreferences: {
@@ -49,7 +49,15 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  handle();
+  const db = new sqlite3.Database(join(__dirname, '../../data/data.db'), (err) => {
+    if (err) {
+      console.error("Database connection failed:", err);
+    } else {
+      console.log("Database connected");
+    }
+  });
+
+  ipcHandler();
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -63,11 +71,7 @@ app.on('window-all-closed', () => {
 });
 
 // handling all IPC
-function handle() {
-
-  ipcMain.on('test', () => {
-    console.log('this is how you ipc');
-  });
+function ipcHandler() {
 
   // first param is event, which is needed if you want to pass anything to the on function
   ipcMain.on('add', (_, path, object) => {
@@ -75,13 +79,45 @@ function handle() {
     addData(path, object);
   });
 
-  ipcMain.on('testAdd', () => {
-    SleepData.tryThis();
+  ipcMain.on('overwrite', (_, path, object) => {
+    fs.writeFileSync(path, Json.createJson(object), 'utf8', (err) => {
+      handleError(err);
+    });
+  });
+
+  ipcMain.on('append', (_, path, object) => {
+    fs.appendFile(path, Json.createJson(object), { encoding: 'utf8', flag: 'a+' }, (err) => {
+      handleError(err);
+    });
+  });
+
+  ipcMain.on('setter', (_, path, object, readData) => {
+    let out = Object.assign({}, readData, object);
+
+    fs.appendFile(path, Json.createJson(out), { encoding: 'utf8', flag: 'a+' }, (err) => {
+      handleError(err);
+    });
+  });
+
+  ipcMain.on('setterOverwrite', (_, path, object, readData) => {
+    let out = Object.assign({}, readData, object);
+
+    fs.appendFile(path, Json.createJson(out), { encoding: 'utf8', flag: 'a+' }, (err) => {
+      handleError(err);
+    });
   });
 
   ipcMain.handle('getter', (_, path) => {
     return fs.readFileSync(path, { encoding: 'utf8' });
-  })
+  });
+
+  // true -> exists, false -> does not
+  ipcMain.handle('checkFileExistence', (_, path) => {
+    if (!fs.existsSync(path)) {
+      return false;
+    }
+    return true;
+  });
 
 }
 

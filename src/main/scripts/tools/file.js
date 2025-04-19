@@ -1,53 +1,34 @@
-import { handleError } from './handler.js';
 import fs from 'fs';
 
-function createJSON(object) {
-  return JSON.stringify(object, null, 2);
-}
+class Json {
 
-function parseObject(json) {
-  return JSON.parse(json);
-}
-
-function getJSON(path) {
-  return fs.readFileSync(path, { encoding: 'utf8' })
-}
-
-function getJsonAsObject(path) {
-  if (getJSON(path) == undefined || getJSON(path) == "") {
-    return '';
+  static createJson(object) {
+    return JSON.stringify(object, null, 2);
   }
-  return parseObject(fs.readFileSync(path, { encoding: 'utf8' }))
+
+  static parseObject(json) {
+    return JSON.parse(json);
+  }
+
 }
 
-function writeAppend(writeable, path) {
-  fs.appendFile(path, createJSON(writeable), { encoding: 'utf8', flag: 'a+' }, (err) => {
-    handleError(err);
-  });
+function addData(path, object) {
+  if (!fs.existsSync(path)) {
+    fs.openSync(path, 'w');
+  }
+
+  let readData = Json.parseObject(window.electron.ipcRenderer.send('getter', path));
+  let out;
+  // console.log(readData);
+
+  if (readData == undefined || readData == "") {
+    out = object;
+  } else {
+    out = Object.assign(object, readData);
+  }
+
+  // window.electron.ipcRenderer.send('append', path, out);
 }
 
-function overwrite(writeable, path) {
-  fs.writeFileSync(path, createJSON(writeable), { encoding: 'utf8' }, (err) => {
-    handleError(err);
-  });
-}
-
-function setter(path, newData, readData) {
-  let r = readData;
-  let data = newData;
-  let writeable = Object.assign(r, newData);
-
-  overwrite(writeable, path);
-}
-
-function setterAppend(path, newData, readData) {
-  let r = readData;
-  let data = newData;
-  let writeable = Object.assign(r, newData);
-  console.log(writeable)
-
-  writeAppend(writeable, path);
-}
-
-export { createJSON, parseObject, getJSON, getJsonAsObject, overwrite, writeAppend, setter, setterAppend }
+export { Json,  addData }
 

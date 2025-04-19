@@ -1,32 +1,22 @@
-import fs from 'fs';
-import { getJSON, setter, overwrite, getJsonAsObject, setterAppend } from '../tools/file.js';
-import { createID } from './data.js';
-// import { getAverageSleep } from '../sleep.js';
-
-const path = '../../../../../data/sleepData.json';
-
-
 class SleepData {
 
   constructor() {
-    const hoursMath = 1000*60*60
+    this.hoursMath = 1000*60*60
   }
 
   init(path) {
     let defaultSleepData = createSleepData(0, []);
 
-    overwrite(defaultSleepData, path);
+    window.electron.ipcRenderer.send('overwrite', path, defaultSleepData);
   }
 
   createSleepData(state = 0, sleeps = '') {
     let sleepData = new Object;
 
-    sleepData.state = state;
     // 0 -> Default State
     // 1 -> Sleep state
-
+    sleepData.state = state;
     sleepData.sleeps = sleeps;
-
 
     return sleepData;
   }
@@ -87,26 +77,6 @@ class SleepData {
     return ((time - readSleeps)/this.hoursMath);
   }
 
-  getSleeps(path) {
-    return getJsonAsObject(path).sleeps
-  }
-
-  static tryThis() {
-    console.log('hello world');
-  }
-
 }
 
-function test() {
-  let date = new Date(Date.now());
-  // let sleeps = createSleep(date.getTime());
-  // addSleeps(path, sleeps);
-  // let delta = getDeltaTime(path, date.getTime());
-  // updateSleeps(path, date.getTime())
-  // getSleeps(path);
-  // console.log(updateGoodness(path, delta))
-}
-
-
-// export { getSleeps, getDeltaTime, setState, addSleeps, updateSleeps, createSleep, createSleepData }
 export { SleepData }

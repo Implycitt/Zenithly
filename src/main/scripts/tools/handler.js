@@ -5,10 +5,4 @@ function handleError(err) {
   }
 }
 
-function handlePromises(promise) {
-  promise.then( (result) => {
-    return result
-  })
-}
-
-export { handlePromises, handleError }
+export { handleError }
