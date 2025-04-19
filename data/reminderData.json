@@ -1,12 +1,8 @@
 {
-  "id": "2025-3-16",
+  "id": "2025-3-19",
   "reminders": [
     {
-      "reminderId": "2025-3-16",
-      "completed": false,
-      "startHour": 23,
-      "startMinute": 14,
-      "startSecond": 27
+      "completed": false
     }
   ]
 }

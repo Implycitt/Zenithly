@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import fs from 'fs';
 import { handleError } from '../../tools/error.js';
 import { getJSON, getJsonAsObject, parseObject, setter } from '../../tools/json.js';
 

@@ -1,5 +1,5 @@
-import fs from 'node:fs';
-import { getJsonAsObject, writeAppend } from '../../tools/json.js';
+import fs from 'fs';
+import { getJsonAsObject, writeAppend } from '../tools/file.js';
 
 const date = new Date(Date.now());
 const path = '../../../../../data/reminderData.json';
@@ -29,7 +29,7 @@ function createRemindersDay(reminders) {
   return reminderObj
 }
 
-function addData(object, path) {
+function addData(path, object) {
   if (!fs.existsSync(path)) {
     fs.openSync(path, 'w');
   }
@@ -63,6 +63,5 @@ function test() {
   addReminder(path, '2025-3-16')
 }
 
-test()
 
 export { addData, createReminder, createID, createRemindersDay }
