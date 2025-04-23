@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, ipcRenderer } from 'electron';
+import { app, shell, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import fs from 'fs';
@@ -6,8 +6,6 @@ import zenithly from '../../resources/zenithly.png?asset';
 
 import { Json, addData } from './scripts/tools/file.js';
 import { handleError } from './scripts/tools/handler.js';
-
-const sqlite3 = require('sqlite3').verbose();
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -49,14 +47,6 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  const db = new sqlite3.Database(join(__dirname, '../../data/data.db'), (err) => {
-    if (err) {
-      console.error("Database connection failed:", err);
-    } else {
-      console.log("Database connected");
-    }
-  });
-
   ipcHandler();
 
   app.on('activate', function () {
@@ -72,12 +62,6 @@ app.on('window-all-closed', () => {
 
 // handling all IPC
 function ipcHandler() {
-
-  // first param is event, which is needed if you want to pass anything to the on function
-  ipcMain.on('add', (_, path, object) => {
-    // since event is not needed we can ignore it
-    addData(path, object);
-  });
 
   ipcMain.on('overwrite', (_, path, object) => {
     fs.writeFileSync(path, Json.createJson(object), 'utf8', (err) => {
@@ -111,7 +95,7 @@ function ipcHandler() {
     return fs.readFileSync(path, { encoding: 'utf8' });
   });
 
-  // true -> exists, false -> does not
+   // true -> exists, false -> does not
   ipcMain.handle('checkFileExistence', (_, path) => {
     if (!fs.existsSync(path)) {
       return false;
@@ -120,4 +104,3 @@ function ipcHandler() {
   });
 
 }
-

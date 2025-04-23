@@ -9,7 +9,8 @@ function init() {
   window.addEventListener('DOMContentLoaded', () => {
     // let object = Reminders.createReminder();
     // window.electron.ipcRenderer.send('add', reminderpath, object)
-    UserData.setGender(userpath, 'male');
+    // window.electron.ipcRenderer.send('unicorn', 3)
+    // console.log(window.electron.invoke('getter', 'unicorn'));
   })
 }
 
