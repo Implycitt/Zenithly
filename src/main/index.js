@@ -4,7 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import fs from 'fs';
 import zenithly from '../../resources/zenithly.png?asset';
 
-import { Json, addData } from './scripts/tools/file.js';
+import { Json } from './scripts/tools/file.js';
 import { handleError } from './scripts/tools/handler.js';
 
 function createWindow() {
@@ -60,7 +60,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-// handling all IPC
 function ipcHandler() {
 
   ipcMain.on('overwrite', (_, path, object) => {
@@ -75,32 +74,23 @@ function ipcHandler() {
     });
   });
 
-  ipcMain.on('setter', (_, path, object, readData) => {
-    let out = Object.assign({}, readData, object);
-
-    fs.appendFile(path, Json.createJson(out), { encoding: 'utf8', flag: 'a+' }, (err) => {
-      handleError(err);
-    });
+  ipcMain.handle('read', (_, path) => {
+    return fs.readFileSync(path, 'utf8')
   });
 
-  ipcMain.on('setterOverwrite', (_, path, object, readData) => {
-    let out = Object.assign({}, readData, object);
-
-    fs.appendFile(path, Json.createJson(out), { encoding: 'utf8', flag: 'a+' }, (err) => {
-      handleError(err);
-    });
-  });
-
-  ipcMain.handle('getter', (_, path) => {
-    return fs.readFileSync(path, { encoding: 'utf8' });
-  });
-
-   // true -> exists, false -> does not
+  // true -> exists, false -> does not
   ipcMain.handle('checkFileExistence', (_, path) => {
-    if (!fs.existsSync(path)) {
-      return false;
-    }
-    return true;
+    return fs.existsSync(path)
   });
+
+  // true -> file is empty, false -> file is full
+  ipcMain.handle('checkFileEmpty', (_, path) => {
+    return (fs.readFileSync(path, 'utf8').length == 0) ? true : false
+  });
+
+  // true -> file does not exists or is empty, false -> exists and not empty
+  ipcMain.handle('checkFile', (_, path) => {
+    return (!fs.existsSync(path) || fs.readFileSync(path, 'utf8').length == 0) ? true : false
+  })
 
 }

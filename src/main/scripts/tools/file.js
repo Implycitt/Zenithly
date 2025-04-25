@@ -1,4 +1,4 @@
-import fs from 'fs';
+import objectScan from 'object-scan';
 
 class Json {
 
@@ -10,25 +10,14 @@ class Json {
     return JSON.parse(json);
   }
 
+  static findById(id, data) {
+    return objectScan(['**.id'], {
+      abort: true,
+      rtn: 'parent',
+      filterFn: ({ value }) => value === id
+    })(data);
+  }
 }
 
-function addData(path, object) {
-  if (!fs.existsSync(path)) {
-    fs.openSync(path, 'w');
-  }
-
-  let readData = Json.parseObject(window.electron.ipcRenderer.send('getter', path));
-  let out;
-  // console.log(readData);
-
-  if (readData == undefined || readData == "") {
-    out = object;
-  } else {
-    out = Object.assign(object, readData);
-  }
-
-  // window.electron.ipcRenderer.send('append', path, out);
-}
-
-export { Json,  addData }
+export { Json }
 

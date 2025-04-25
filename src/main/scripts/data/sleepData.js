@@ -5,21 +5,16 @@ class SleepData {
   }
 
   init(path) {
-    let defaultSleepData = createSleepData(0, []);
-
-    window.electron.ipcRenderer.send('overwrite', path, defaultSleepData);
-  }
-
-  createSleepData(state = 0, sleeps = '') {
     let sleepData = new Object;
 
     // 0 -> Default State
     // 1 -> Sleep state
     sleepData.state = state;
-    sleepData.sleeps = sleeps;
+    sleepData.sleeps = []
 
-    return sleepData;
+    window.electron.ipcRenderer.send('overwrite', path, sleepData);
   }
+
 
   createSleep(start, endTime = null, timeSlept = 0, goodness = 0) {
     let sleep = new Object;

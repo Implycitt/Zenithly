@@ -1,3 +1,5 @@
+import { Json } from '../tools/file.js';
+
 class UserData {
 
   static init(path) {
@@ -16,29 +18,33 @@ class UserData {
   }
 
   static setGender(path, gender) {
-    if (!window.electron.ipcRenderer.invoke('checkFileExistence', path)) {
-      self.init();
-    }
+    window.electron.ipcRenderer.invoke('checkFile', path).then( (result) => {
+      if (result) this.init(path);
+    });
 
-    let newData = this.createUserData(gender);
-    let readData = window.electron.ipcRenderer.invoke('getter', path);
+    let readData = window.electron.ipcRenderer.invoke('read', path);
 
     readData.then( (result) => {
-      window.electron.ipcRenderer.send('setterOverwrite', path, newData, result);
+      result = Json.parseObject(result);
+      let out = this.createUserData(gender, result.water);
+
+      window.electron.ipcRenderer.send('overwrite', path, out);
     })
 
   }
 
   static setIntake(path, water) {
-    if (!window.electron.ipcRenderer.invoke('checkFileExistence', path)) {
-      self.init();
-    }
+    window.electron.ipcRenderer.invoke('checkFile', path).then( (result) => {
+      if (result) this.init(path);
+    });
 
-    let readData = window.electron.ipcRenderer.invoke('getter', path);
-    let newData = this.createUserData(readData.gender, water);
+    let readData = window.electron.ipcRenderer.invoke('read', path);
 
     readData.then( (result) => {
-      window.electron.ipcRenderer.send('setterOverwrite', path, newData, result);
+      result = Json.parseObject(result);
+      let out = this.createUserData(result.gender, water);
+
+      window.electron.ipcRenderer.send('overwrite', path, out);
     })
   }
 

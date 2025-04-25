@@ -7,18 +7,12 @@ const userpath = './data/userData.json';
 
 function init() {
   window.addEventListener('DOMContentLoaded', () => {
-    // let object = Reminders.createReminder();
-    // window.electron.ipcRenderer.send('add', reminderpath, object)
-    // window.electron.ipcRenderer.send('unicorn', 3)
-    // console.log(window.electron.invoke('getter', 'unicorn'));
-  })
-}
+    // let day = Reminders.createRemindersDay();
+    // Reminders.addDay(reminderpath, day)
+    let reminder = Reminders.createReminder(1, 1, 1, 1, 1);
+    Reminders.addReminder(reminderpath, '2025-3-24', reminder);
 
-function getBack() {
-  const read = window.electron.ipcRenderer.invoke('getter', path);
-  // read.then( (result) => {
-    console.log(read);
-  // })
+  })
 }
 
 init();
