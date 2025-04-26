@@ -1,13 +1,8 @@
 {
-  "id": "2025-3-24",
-  "reminders": [
+  "Reminder": [
     {
-      "id": 1,
-      "completed": false,
-      "startHour": 1,
-      "startMinute": 1,
-      "startSecond": 1,
-      "waterQuantity": 1
+      "id": "2025-3-25",
+      "reminders": []
     }
   ]
 }

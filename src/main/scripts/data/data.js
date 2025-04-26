@@ -9,11 +9,6 @@ class Reminders {
     window.electron.ipcRenderer.send('overwrite', path, defaultData);
   }
 
-  static createID() {
-    let date = new Date(Date.now());
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-  }
-
   static createReminder(id, startHour, startMinute, startSecond, quantity) {
     let remind = new Object;
 
@@ -30,21 +25,25 @@ class Reminders {
   static createRemindersDay() {
     let reminderObj = new Object;
 
-    reminderObj.id = this.createID();
+    reminderObj.id = Json.createId();
     reminderObj.reminders = [];
 
     return reminderObj
   }
 
   static addDay(path, reminderDay) {
-    window.electron.ipcRenderer.invoke('checkFile', path).then( (result) => {
-      if (result) this.init(path);
-    });
+    this.check(path);
 
     let readData = window.electron.ipcRenderer.invoke('read', path);
 
     readData.then( (result) => {
       let resultObj = Json.parseObject(result);
+
+      if (Json.findById(reminderDay.id, resultObj) != undefined) {
+        console.log("Day already exists");
+        return
+      }
+
       resultObj.Reminder.push(reminderDay);
 
       window.electron.ipcRenderer.send('overwrite', path, resultObj);
@@ -52,10 +51,7 @@ class Reminders {
   }
 
   static addReminder(path, parentId, reminder) {
-    window.electron.ipcRenderer.invoke('checkFile', path).then( (result) => {
-      if (result) this.init(path);
-    });
-
+    this.check(path);
 
     let readData = window.electron.ipcRenderer.invoke('read', path);
 
@@ -78,8 +74,56 @@ class Reminders {
 
   }
 
-  static updateReminder(path) {
-    //TODO
+  static updateReminder(path, id) {
+    this.check(path);
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+
+    readData.then( (result) => {
+      let parsedRes = Json.parseObject(result);
+
+      let parentObj = Json.findById(id, parsedRes);
+      let count = Json.getCountById(id, parsedRes);
+
+      if (parentObj == undefined) {
+        console.log("Id not found");
+        return
+      }
+
+      parsedRes.reminders[count-1].completed = true;
+
+      window.electron.ipcRenderer.send('overwrite', path, parentObj);
+    });
+
+  }
+
+  static updateWater(path, id, water) {
+    this.check(path);
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+
+    readData.then( (result) => {
+      let parsedRes = Json.parseObject(result);
+
+      let parentObj = Json.findById(id, parsedRes);
+      let count = Json.getCountById(id, parsedRes);
+
+      if (parentObj == undefined) {
+        console.log("Id not found");
+        return
+      }
+
+      parsedRes.reminders[count-1].waterQuantity = water;
+
+      window.electron.ipcRenderer.send('overwrite', path, parentObj);
+    });
+
+  }
+
+  static check(path) {
+    window.electron.ipcRenderer.invoke('checkFile', path).then( (result) => {
+      if (result) this.init(path);
+    });
   }
 
 }

@@ -17,6 +17,19 @@ class Json {
       filterFn: ({ value }) => value === id
     })(data);
   }
+
+  static getCountById(id, data) {
+    return objectScan(['**.id'], {
+      abort: true,
+      rtn: 'count',
+      filterFn: ({ value }) => value === id
+    })(data);
+  }
+
+  static createId() {
+    let date = new Date(Date.now());
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+  }
 }
 
 export { Json }

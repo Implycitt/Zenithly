@@ -1,25 +1,25 @@
+import { Json } from '../tools/file.js';
+
+const hoursMath = 1000*60*60
+
 class SleepData {
 
-  constructor() {
-    this.hoursMath = 1000*60*60
-  }
-
-  init(path) {
+  static init(path) {
     let sleepData = new Object;
 
     // 0 -> Default State
     // 1 -> Sleep state
     sleepData.state = state;
+    sleepData.averageSleep = 0;
     sleepData.sleeps = []
 
     window.electron.ipcRenderer.send('overwrite', path, sleepData);
   }
 
-
-  createSleep(start, endTime = null, timeSlept = 0, goodness = 0) {
+  static createSleep(start, endTime = null, timeSlept = 0, goodness = 0) {
     let sleep = new Object;
 
-    sleep.ID = createID();
+    sleep.id = Json.createId();
     sleep.startTime = start;
     sleep.endTime = endTime;
     sleep.timeSlept = timeSlept;
@@ -28,48 +28,87 @@ class SleepData {
     return sleep
   }
 
-  updateSleeps(path, endTime) {
-    let readData = getJsonAsObject(path);
-    let lastStartTime = readData.sleeps.slice(-1)[0].startTime;
-    let delta = getDeltaTime(path, endTime);
-    let object = createSleep(lastStartTime, endTime, delta, updateGoodness(path, delta));
-    readData.sleeps.pop();
-    let conc = readData.sleeps.concat(object);
-    let writeable = createSleepData(0, conc);
-    overwrite(writeable, path);
+  static addSleeps(path, sleeps) {
+    this.check(path);
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+
+    readData.then( (result) => {
+      let resultObj = Json.parseObject(result);
+
+      resultObj.sleeps.push(sleeps);
+      window.electron.ipcRenderer.send('overwrite', path, resultObj);
+    })
   }
 
-  updateGoodness(path, delta) {
-    let readData = getJsonAsObject(path);
-    let average = getAverageSleep(path);
-    if (average == 0) average = 1
-    return (delta/average)
+  static setEndTime(path, userPath, id, endTime) {
+    this.check(path);
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+
+    readData.then( (result) => {
+      let resultObj = Json.parseObject(result);
+      let parentObj = Json.findById(id, resultObj.sleeps);
+
+      if (parentObj == undefined) {
+        console.log("Id not found");
+        return
+      }
+
+      let delta = (endTime - parentObj.startTime) / hoursMath;
+
+      window.electron.ipcRenderer.invoke('read', userPath).then( (userRes) => {
+        // one minus the deviation from the average sleep over the target sleep normalized: gives a standard number between 0 and 1 that represents how close to the target
+        // and the users average sleep they are. will also be used to change the color for the icons
+        parentObj.goodnessOfSleep = parseFloat((1 - (((delta - resultObj.averageSleep) / Json.parseObject(userRes).targetSleep) % 1)).toFixed(3));
+        parentObj.endTime = endTime;
+        parentObj.timeSlept = parseFloat(delta.toFixed(2));
+
+        window.electron.ipcRenderer.send('overwrite', path, resultObj);
+        this.updateAverageSleep(path);
+      })
+    })
+
   }
 
-  addSleeps(path, sleeps) {
-    if (getJsonAsObject(path) == undefined || getJsonAsObject(path) == "") {
-      init(path);
-    }
-    let readData = getJsonAsObject(path);
-    let conc = readData.sleeps.concat(sleeps);
-    let writeable = createSleepData(1, conc);
-    setter(path, writeable, readData);
+  static setState(path, state) {
+    this.check(path);
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+
+    readData.then( (result) => {
+      let parsedRes = Json.parseObject(result);
+
+      parsedRes.state = state;
+
+      window.electron.ipcRenderer.send('overwrite', path, parentObj);
+    });
   }
 
-  setState(path, state) {
-    let readData = getJsonAsObject(path);
-    let newData = createSleepData(state);
-    if (!fs.existsSync(path)) init();
-    setter(path, newData, readData);
+  static updateAverageSleep(path) {
+    this.check(path);
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+
+    readData.then( (result) => {
+      let resultObj = Json.parseObject(result);
+      let avg = 0;
+
+      for (let i = 0; i < resultObj.sleeps.length; ++i) {
+        avg += resultObj.sleeps[i].timeSlept;
+      }
+      avg /= resultObj.sleeps.length;
+      resultObj.averageSleep = avg;
+
+      window.electron.ipcRenderer.send('overwrite', path, resultObj);
+    })
+
   }
 
-  getDeltaTime(path, time) {
-    let readData = getJsonAsObject(path);
-    if (readData == undefined) return;
-
-    let readSleeps = readData.sleeps.slice(-1)[0].startTime;
-
-    return ((time - readSleeps)/this.hoursMath);
+  static check(path) {
+    window.electron.ipcRenderer.invoke('checkFile', path).then( (result) => {
+      if (result) this.init(path);
+    });
   }
 
 }

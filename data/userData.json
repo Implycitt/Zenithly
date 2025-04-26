@@ -1,4 +1,5 @@
 {
   "gender": "male",
-  "waterIntake": 3
+  "waterIntake": 3,
+  "targetSleep": 8
 }
