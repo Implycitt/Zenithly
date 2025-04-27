@@ -4,8 +4,6 @@ import sleepIcon from '../../assets/images/sleep.png';
 
 const calendarBody = document.getElementById("calendar-body");
 const monthYearLabel = document.getElementById("month-year");
-const prevBtn = document.getElementById("prev-month");
-const nextBtn = document.getElementById("next-month");
 const calendarHeader = document.getElementById("calendar-header");
 
 let currentDate = new Date();
@@ -38,7 +36,6 @@ function renderCalendar(month, year) {
         const p = cell.appendChild(document.createElement("p"));
 
         cell.classList.add("calendar-day");
-        p.classList.add("nunito-regular");
         p.style.margin = "0px";
 
         if (i === 0 && j < firstDay) {
@@ -155,30 +152,25 @@ function hideDayContent() {
   });
 }
 
-// Button
-prevBtn.addEventListener("click", () => {
+document.addEventListener('wheel', (event) => {
+  if (event.deltaY > 0) {
     currentMonth--;
     if (currentMonth < 0) {
       currentMonth = 11;
       currentYear--;
     }
-    renderCalendar(currentMonth, currentYear);
-    calendarHeight();
-    checkContent();
-    hideDayContent();
-  });
-
-nextBtn.addEventListener("click", () => {
+  } else if (event.deltaY < 0) {
     currentMonth++;
     if (currentMonth > 11) {
       currentMonth = 0;
       currentYear++;
     }
-    renderCalendar(currentMonth, currentYear);
-    calendarHeight();
-    checkContent();
-    hideDayContent();
-  });
+  }
+  renderCalendar(currentMonth, currentYear);
+  calendarHeight();
+  checkContent();
+  hideDayContent();
+})
 
 document.addEventListener('click', function(event) {
   if (event.target.classList.contains('close')) {

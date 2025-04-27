@@ -1,13 +1,13 @@
 {
   "state": 2,
-  "averageSleep": 241.15,
+  "averageSleep": 279.2,
   "sleeps": [
     {
       "id": "2025-3-16",
       "startTime": 1744779812984,
-      "endTime": 1745647952624,
-      "timeSlept": 241.15,
-      "goodnessOfSleep": 0.996
+      "endTime": 1745784928252,
+      "timeSlept": 279.2,
+      "goodnessOfSleep": 0.793
     }
   ]
 }

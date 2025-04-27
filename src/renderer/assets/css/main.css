@@ -1,21 +1,32 @@
 /* Updated CSS Variables */
+
 :root {
-  --white: #FAFAFA;
-  --offwhiteGreen: #F0FFF4;
-  --pastelGreen: #CDEECC;
-  --lightGreen: #A3D9A5;
-  --mediumGreen: #76C893;
-  --hoverGreen: #5DBB89;
-  --deepGreen: #4F9D69;
+  --base-color: #DAD7CD;
+  --base-variant: #DDDAD1;
+  --text-color: #D8F3DC;
+  --secondary-text: #74C69D;
+  --primary-color: #40916C;
+  --accent-color: #52B788;
+}
+
+.darkmode {
+  --base-color: #212224;
+  --base-variant: #313335;
+  --text-color: #ffffff;
+  --secondary-text: #a4a5b8;
+  --primary-color: #40916C;
+  --accent-color: #52B788;
 }
 
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, sans-serif;
   box-sizing: border-box;
+  font-weight: bold;
+  color: var(--text-color);
 }
 
 body {
-  background-color: var(--white);
+  background-color: var(--base-color);
   margin: 0;
   overflow: hidden;
 }
@@ -26,8 +37,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: var(--mediumGreen);
-  color: white;
+  background-color: var(--primary-color);
   position: fixed;
   top: 0;
   left: 50%;
@@ -72,7 +82,7 @@ body {
   padding: 10px 20px;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
-  background-color: var(--pastelGreen);
+  background-color: var(--primary-color);
   height: 85vh;
   min-height: 505px;
 }
@@ -87,31 +97,10 @@ body {
   margin: 30px;
 }
 
-#prev-month, #next-month {
-  display: block;
-  background-color: var(--lightGreen);
-  color: black;
-  width: 30px;
-  height: 20px;
-  border-radius: 5px;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 0 10px var(--mediumGreen);
-  transition: background-color 0.5s;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.5s, transform 0.5s;
-}
-
-#prev-month:hover, #next-month:hover {
-  background-color: var(--hoverGreen);
-  transform: scale(1.2);
-  transition: background-color 0.5s, transform 0.5s;
-}
-
 #month-year {
   width: 140px;
+  font-size: 17px;
+  font-weight: bold;
   text-align: center;
   display: block;
 }
@@ -119,12 +108,10 @@ body {
 /* Calendar styles */
 .calendar {
   border-collapse: separate;
-  background-color: var(--pastelGreen);
   margin: 10px auto 20px auto;
   border-spacing: 10px;
   height: 90%;
 }
-
 
 .today p {
   font-size: xx-large;
@@ -133,18 +120,14 @@ body {
   width: 60px;
   line-height: 60px;
   margin: auto;
-  box-shadow: 0 0 10px var(--mediumGreen);
-
-  border-radius: 50%; /* or 50% */
-
-  background-color: var(--hoverGreen);
+  box-shadow: 0 0 10px var(--text-color);
+  border-radius: 50%;
+  background-color: var(--accent-color);
   color: white;
   text-align: center;
   font-size: 2em;
-
   margin: 0 auto;
 }
-
 
 .calendar thead th {
   width: 170px;
@@ -152,7 +135,6 @@ body {
   font-weight: 700;
   text-align: center;
   padding: 0.5rem;
-  background-color: var(--white);
   border-radius: 12px;
 }
 
@@ -161,16 +143,15 @@ body {
   overflow: visible;
   z-index: 0;
   width: 22vw;
-  background-color: var(--white);
   border-radius: 12px;
   transition: background-color 0.2s, transform 0.2s, scale 0.5s, box-shadow 0.5s;
   text-align: center;
 }
 
 .calendar tbody td:hover {
-  background-color: var(--offwhiteGreen);
+  background-color: var(--primary-color);
   transform: perspective(5000px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
-  box-shadow: 0px 0px 0px 2px var(--mediumGreen);
+  box-shadow: 0px 0px 0px 2px var(--accent-color);
   scale: 1.5;
   z-index: 10;
 }
@@ -180,22 +161,22 @@ body {
 }
 
 .today:hover p {
-    color: var(--hoverGreen);
-    border: none;
-    box-shadow: none;
-    height: auto;
-    width: auto;
-    background-color: transparent;
-    left: 0;
-    top: 0px;
-    transform: none;
-    line-height: normal;
+  border: none;
+  box-shadow: none;
+  height: auto;
+  width: auto;
+  background-color: transparent;
+  left: 0;
+  top: 0px;
+  transform: none;
+  line-height: normal;
 }
-
 
 /* Reminders page */
 .day-view {
-  background-color: var(--pastelGreen);
+  background-color: var(--base-color);
+  border-style: solid;
+  border-color: var(--accent-color);
   display: none;
   position: relative;
   flex-basis: 600px;
@@ -204,26 +185,31 @@ body {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
   min-height: 505px;
+  color: var(--secondary-text);
+}
+
+#dayTitle {
+  color: var(--secondary-text);
 }
 
 .close {
   top: 0;
   right: 0;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   align-self: normal;
   position: absolute;
   margin: 30px;
+  filter: opacity(0.5) drop-shadow(0 0 0 var(--primary-color)) saturate(350%);
 }
-
 
 /* Reminders button */
 .add-reminder {
   position: absolute;
   bottom: 30px;
   right: 30px;
-  background-color: var(--lightGreen);
-  color: black;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -232,12 +218,12 @@ body {
   justify-content: center;
   font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 0 10px var(--mediumGreen);
+  box-shadow: 0 0 10px var(--text-color);
   transition: background-color 0.5s, transform 0.5s;
 }
 
 .add-reminder:hover {
-  background-color: var(--hoverGreen);
+  background-color: var(--base-color);
   transform: scale(1.2);
   transition: background-color 0.5s, transform 0.5s;
 }
@@ -253,7 +239,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: var(--pastelGreen);
+  background-color: var(--base-color);
   box-shadow: 0px 0px 10px black;
   border-radius: 10px;
   width: 400px;
@@ -265,6 +251,7 @@ body {
 .reminderPopup h2 {
   font-weight: 600;
   margin-top: -7px;
+  color: var(--secondary-text);
 }
 
 #reminderInput {
@@ -273,10 +260,12 @@ body {
   height: 34px;
   padding: 0px 10px;
   border-radius: 5px;
+  color: var(--secondary-text);
 }
 
 #reminderInput::-webkit-datetime-edit-text {
   padding: 19px 4px;
+  color: var(--secondary-text);
 }
 
 /* Hour */
@@ -284,10 +273,11 @@ body {
   background-color: #f2f4f5;
   border-radius: 15%;
   padding: 19px 13px;
+  color: var(--secondary-text);
 }
 
 #reminderInput::-webkit-datetime-edit-hour-field:focus {
-  color: var(--deepGreen);
+  color: var(--secondary-text);
 }
 
 /* Minute */
@@ -295,15 +285,16 @@ body {
   background-color: #f2f4f5;
   border-radius: 15%;
   padding: 19px 13px;
+  color: var(--secondary-text);
 }
 
 #reminderInput::-webkit-datetime-edit-minute-field:focus {
-  color: var(--deepGreen);
+  color: var(--secondary-text);
 }
 
 /* AM/PM */
 #reminderInput::-webkit-datetime-edit-ampm-field {
-  background-color: var(--deepGreen);
+  background-color: var(--secondary-text);
   border-radius: 15%;
   color: #fff;
   padding: 19px 13px;
@@ -319,13 +310,13 @@ body {
 
 #saveReminder {
   display: block;
-  background-color: var(--lightGreen);
+  background-color: var(--accent-color);
   color: black;
   border-radius: 5px;
   border: none;
   font-size: 15px;
   cursor: pointer;
-  box-shadow: 0 0 10px var(--mediumGreen);
+  box-shadow: 0 0 10px var(--accent-color);
   transition: background-color 0.5s;
   align-items: center;
   justify-content: center;
@@ -333,17 +324,18 @@ body {
 }
 
 #saveReminder:hover {
-  background-color: var(--hoverGreen);
+  background-color: var(--accent-color);
   transform: scale(1.1);
   transition: background-color 0.5s, transform 0.5s;
 }
 
 .reminderClose {
   position: absolute;
-  height: 20px;
-  top: 10px;
-  right: 10px;
+  height: 30px;
+  top: 15px;
+  right: 22px;
   z-index: 999999999999;
+  filter: opacity(0.5) drop-shadow(0 0 0 var(--primary-color)) saturate(350%);
 }
 
 /* Day View Reminders */
@@ -357,7 +349,7 @@ body {
 .reminder {
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: var(--primary-color);
   width: 100%;
   height: 50px;
   border-radius: 7px;
@@ -387,8 +379,8 @@ body {
     flex-direction: column;
     justify-content: left;
     text-align: left;
-    background-color: var(--mediumGreen);
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     position: relative;
     left: 0%;
     transform: translateX(0%);
@@ -455,4 +447,31 @@ body {
     line-height: 30px;
     font-size: large;
   }
+}
+
+#theme-switch {
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: var(--base-variant);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#theme-switch svg {
+  fill: var(--primary-color);
+}
+
+#theme-switch svg:last-child {
+  display: none;
+}
+
+.darkmode #theme-switch svg:first-child {
+  display: none;
+}
+
+.darkmode #theme-switch svg:last-child {
+  display: block;
 }

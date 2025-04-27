@@ -20,7 +20,7 @@ function smallWindow(x) {
 
 function bigWindow(x) {
   if (x.matches) {
-    document.getElementById("navTitle").textContent = "Zenithly";
+    document.getElementById("navTitle").textContent = "Z";
   }
 }
 
