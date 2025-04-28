@@ -105,6 +105,42 @@ class SleepData {
 
   }
 
+  static getAverageWakeTime(path) {
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+    let avg = 0;
+
+    readData.then( (result) => {
+      let resultObj = Json.parseObject(result);
+
+      for (let i = 0; i < resultObj.sleeps.length; ++i) {
+        let utc = new Date(resultObj.sleeps[i].endTime);
+        avg += utc.getUTCHours()
+      }
+      avg /= resultObj.sleeps.length;
+
+      return avg;
+    });
+  }
+
+  static getAverageBedTime(path) {
+
+    let readData = window.electron.ipcRenderer.invoke('read', path);
+
+    readData.then( (result) => {
+      let resultObj = Json.parseObject(result);
+      let avg = 0;
+
+      for (let i = 0; i < resultObj.sleeps.length; ++i) {
+        let utc = new Date(resultObj.sleeps[i].startTime);
+        avg += utc.getUTCHours();
+      }
+      avg /= resultObj.sleeps.length;
+
+      return avg;
+    });
+  }
+
   static check(path) {
     window.electron.ipcRenderer.invoke('checkFile', path).then( (result) => {
       if (result) this.init(path);

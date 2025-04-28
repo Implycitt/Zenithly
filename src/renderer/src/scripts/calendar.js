@@ -2,6 +2,11 @@ import closeButton from '../../assets/images/close.png';
 import waterIcon from '../../assets/images/water.png';
 import sleepIcon from '../../assets/images/sleep.png';
 
+import { Json } from '../../../main/scripts/tools/file';
+import { Reminders } from '../../../main/scripts/data/data';
+
+const reminderPath = './data/reminderData.json';
+
 const calendarBody = document.getElementById("calendar-body");
 const monthYearLabel = document.getElementById("month-year");
 const calendarHeader = document.getElementById("calendar-header");
@@ -58,6 +63,28 @@ function renderCalendar(month, year) {
             dayView.append(close);
             dayView.style.display = "block";
             calendarHeader.style.justifyContent = "flex-start";
+
+            window.electron.ipcRenderer.invoke('read', reminderPath).then( (response) => {
+              let respObj = Json.parseObject(response);
+              let id = `${year}-${todayMonth+1}-${p.textContent}`;
+              let parentObj = Json.findById(id, respObj);
+              let reminders = document.getElementById("reminders");
+              if (parentObj == undefined && Json.createId() == id) {
+                Reminders.createCurrentDayData();
+              } else if (parentObj == undefined) {
+                reminders.innerHTML = "No data for this day...";
+              } else {
+                reminders.innerHTML = '';
+                for (let i = 0; i < parentObj.reminders[0].length; ++i) {
+                  let reminder = document.createElement('div');
+                  let text = document.createElement('h3');
+                  reminder.className = 'reminder';
+                  text.innerHTML = `${parentObj.reminders[0][i].startHour}:${parentObj.reminders[0][i].startMinute}: Drink ${parentObj.reminders[0][i].waterQuantity} L of water`
+                  reminder.append(text);
+                  reminders.append(reminder);
+                }
+              }
+            })
           })
 
           const iconContainer = document.createElement("div");
@@ -152,7 +179,7 @@ function hideDayContent() {
   });
 }
 
-document.addEventListener('wheel', (event) => {
+calendarBody.addEventListener('wheel', (event) => {
   if (event.deltaY > 0) {
     currentMonth--;
     if (currentMonth < 0) {
@@ -179,6 +206,14 @@ document.addEventListener('click', function(event) {
   }
 });
 
+let box = document.getElementById('calendar');
+calendarBody.addEventListener('mousemove', (e) => {
+  const rect = calendarBody.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  box.style.setProperty("--x", `${x}px`)
+  box.style.setProperty("--y", `${y}px`)
+})
 
 renderCalendar(currentMonth, currentYear);
 calendarHeight();

@@ -28,7 +28,7 @@ class Json {
 
   static createId() {
     let date = new Date(Date.now());
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+    return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
   }
 }
 

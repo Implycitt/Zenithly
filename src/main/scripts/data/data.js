@@ -9,14 +9,13 @@ class Reminders {
     window.electron.ipcRenderer.send('overwrite', path, defaultData);
   }
 
-  static createReminder(id, startHour, startMinute, startSecond, quantity) {
+  static createReminder(id, startHour, startMinute, quantity) {
     let remind = new Object;
 
     remind.id = id;
     remind.completed = false;
     remind.startHour = startHour;
     remind.startMinute = startMinute;
-    remind.startSecond = startSecond;
     remind.waterQuantity = quantity;
 
     return remind
@@ -118,6 +117,14 @@ class Reminders {
       window.electron.ipcRenderer.send('overwrite', path, parentObj);
     });
 
+  }
+
+  static createCurrentDayData(path) {
+    window.electron.ipcRenderer.invoke('read', path).then( (result) => {
+      if (Json.findById(Json.createId(), Json.parseObject(result)) == undefined) {
+        window.electron.ipcRenderer.send('overwrite', path, this.createRemindersDay());
+      }
+    })
   }
 
   static check(path) {

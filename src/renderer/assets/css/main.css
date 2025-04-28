@@ -154,6 +154,13 @@ body {
   box-shadow: 0px 0px 0px 2px var(--accent-color);
   scale: 1.5;
   z-index: 10;
+  background: radial-gradient(
+    1500px circle at var(--x) var(--y),
+    rgba(var(--text-color)),
+    transparent 15%
+  );
+  opacity: 0;
+  z-index: 2;
 }
 
 .calendar tbody td p:active {
@@ -344,6 +351,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 20px;
 }
 
 .reminder {
@@ -352,8 +360,9 @@ body {
   background-color: var(--primary-color);
   width: 100%;
   height: 50px;
-  border-radius: 7px;
-  padding: 5%;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 5px;
 }
 
 .reminder h3 {
