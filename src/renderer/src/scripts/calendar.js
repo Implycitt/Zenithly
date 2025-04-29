@@ -4,8 +4,12 @@ import sleepIcon from '../../assets/images/sleep.png';
 
 import { Json } from '../../../main/scripts/tools/file';
 import { Reminders } from '../../../main/scripts/data/data';
+import { SleepData } from '../../../main/scripts/data/sleepData';
+import { createReminders } from './reminders';
 
 const reminderPath = './data/reminderData.json';
+const sleepPath = './data/sleepData.json';
+const userPath = './data/userData.json';
 
 const calendarBody = document.getElementById("calendar-body");
 const monthYearLabel = document.getElementById("month-year");
@@ -68,14 +72,16 @@ function renderCalendar(month, year) {
               let respObj = Json.parseObject(response);
               let id = `${year}-${todayMonth+1}-${p.textContent}`;
               let parentObj = Json.findById(id, respObj);
+            console.log(parentObj)
               let reminders = document.getElementById("reminders");
               if (parentObj == undefined && Json.createId() == id) {
                 Reminders.createCurrentDayData();
+                createReminders();
               } else if (parentObj == undefined) {
                 reminders.innerHTML = "No data for this day...";
               } else {
                 reminders.innerHTML = '';
-                for (let i = 0; i < parentObj.reminders[0].length; ++i) {
+                for (let i = 0; i < parentObj.reminders.length; ++i) {
                   let reminder = document.createElement('div');
                   let text = document.createElement('h3');
                   reminder.className = 'reminder';
@@ -213,6 +219,20 @@ calendarBody.addEventListener('mousemove', (e) => {
   const y = e.clientY - rect.top;
   box.style.setProperty("--x", `${x}px`)
   box.style.setProperty("--y", `${y}px`)
+})
+
+let sleepToggle = document.getElementById("sleep-toggle");
+sleepToggle.addEventListener('click', () => {
+  let date = new Date(Date.now());
+  window.electron.ipcRenderer.invoke('read', sleepPath).then( (result) => {
+    let resObj = Json.parseObject(result);
+    if (resObj.state == 0 && resObj.sleeps[resObj.sleeps.length-1].endTime == null) {
+      SleepData.setEndTime(sleepPath, userPath, resObj.sleeps[resObj.sleeps.length-1].id, date.getTime());
+    } else if (resObj.state == 1) {
+      SleepData.addSleeps(sleepPath, SleepData.createSleep(date.getTime()));
+      SleepData.setState(sleepPath);
+    }
+  })
 })
 
 renderCalendar(currentMonth, currentYear);

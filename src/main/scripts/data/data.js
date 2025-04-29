@@ -55,6 +55,7 @@ class Reminders {
     let readData = window.electron.ipcRenderer.invoke('read', path);
 
     readData.then( (result) => {
+      let resObj = Json.parseObject(result);
       let parentObj = Json.findById(parentId, Json.parseObject(result));
 
       if (parentObj == undefined) {
@@ -68,7 +69,8 @@ class Reminders {
       }
 
       parentObj.reminders.push(reminder);
-      window.electron.ipcRenderer.send('overwrite', path, parentObj);
+
+      window.electron.ipcRenderer.send('overwrite', path, resObj);
     })
 
   }
@@ -121,8 +123,13 @@ class Reminders {
 
   static createCurrentDayData(path) {
     window.electron.ipcRenderer.invoke('read', path).then( (result) => {
-      if (Json.findById(Json.createId(), Json.parseObject(result)) == undefined) {
-        window.electron.ipcRenderer.send('overwrite', path, this.createRemindersDay());
+      let resObj = Json.parseObject(result);
+      if (Json.findById(Json.createId(), resObj.Reminder) == undefined) {
+        console.log('here')
+        let resObj = Json.parseObject(result);
+        let dayData = this.createRemindersDay();
+        resObj.Reminder.push(dayData);
+        window.electron.ipcRenderer.send('overwrite', path, resObj);
       }
     })
   }

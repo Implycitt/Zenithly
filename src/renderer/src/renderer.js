@@ -12,12 +12,9 @@ function init() {
   window.addEventListener('DOMContentLoaded', () => {
     Reminders.check(reminderPath);
     Reminders.createCurrentDayData(reminderPath);
+    createReminders();
     UserData.check(userPath);
     SleepData.check(sleepPath)
-
-    // let date = new Date(Date.now());
-    // SleepData.getAverageWakeTime(sleepPath)
-
   })
 }
 

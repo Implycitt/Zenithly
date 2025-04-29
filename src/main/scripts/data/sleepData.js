@@ -36,6 +36,8 @@ class SleepData {
     readData.then( (result) => {
       let resultObj = Json.parseObject(result);
 
+      if (Json.findById(sleeps.id, resultObj) != undefined) return;
+
       resultObj.sleeps.push(sleeps);
       window.electron.ipcRenderer.send('overwrite', path, resultObj);
     })
@@ -71,7 +73,7 @@ class SleepData {
 
   }
 
-  static setState(path, state) {
+  static setState(path) {
     this.check(path);
 
     let readData = window.electron.ipcRenderer.invoke('read', path);
@@ -79,9 +81,9 @@ class SleepData {
     readData.then( (result) => {
       let parsedRes = Json.parseObject(result);
 
-      parsedRes.state = state;
+      parsedRes.state = (parsedRes.state+1)%2;
 
-      window.electron.ipcRenderer.send('overwrite', path, parentObj);
+      window.electron.ipcRenderer.send('overwrite', path, parsedRes);
     });
   }
 
